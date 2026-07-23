@@ -1,0 +1,134 @@
+/* =============================================================================
+   MoMA Design Tokens
+   Source: moma-design-tokens.tokens.json — Responsive sizes collection
+   ============================================================================= */
+
+:root {
+
+  /* --- Colors: Base -------------------------------------------------------- */
+  --color-black: #000000;
+  --color-white: #ffffff;
+  --color-red:   #e42d00;
+
+  /* --- Colors: Brand ------------------------------------------------------- */
+  --color-brand-pink:        #f752bd;
+  --color-brand-red:         #e82046;
+  --color-brand-scarlet:     #ff585d;
+  --color-brand-salmon:      #ffa096;
+  --color-brand-orange:      #ff8f1c;
+  --color-brand-yellow:      #fac300;
+  --color-brand-light-green: #8fc421;
+  --color-brand-green:       #02b042;
+  --color-brand-turquoise:   #6bdcc5;
+  --color-brand-light-blue:  #00b7f2;
+  --color-brand-blue:        #5e96ff;
+  --color-brand-purple:      #ab79e6;
+
+  /* --- Colors: Gray -------------------------------------------------------- */
+  --color-gray-111: #111111;
+  --color-gray-222: #222222;
+  --color-gray-333: #333333;
+  --color-gray-444: #444444;
+  --color-gray-555: #555555;
+  --color-gray-666: #666666;
+  --color-gray-767: #767676;
+  --color-gray-888: #888888;
+  --color-gray-999: #999999;
+  --color-gray-aaa: #aaaaaa;
+  --color-gray-bbb: #bbbbbb;
+  --color-gray-ccc: #cccccc;
+  --color-gray-ddd: #dddddd;
+  --color-gray-eee: #eeeeee;
+  --color-gray-f6f: #f6f6f6;
+
+  /* --- Colors: Membership -------------------------------------------------- */
+  --color-membership-dark-purple:  #8a015f;
+  --color-membership-purple:       #b33370;
+  --color-membership-light-purple: #f6c1e6;
+  --color-membership-dark-red:     #943800;
+  --color-membership-red:          #bd3c00;
+  --color-membership-light-red:    #ffe6e2;
+  --color-membership-dark-blue:    #002e61;
+  --color-membership-blue:         #09509f;
+  --color-membership-light-blue:   #d5faea;
+  --color-membership-dark-green:   #024b20;
+  --color-membership-green:        #007933;
+  --color-membership-light-green:  #c8ff97;
+  --color-membership-dark-yellow:  #5e5e00;
+  --color-membership-yellow:       #ad9200;
+  --color-membership-light-yellow: #feffb9;
+  --color-membership-dark-grey:    #0e0e0e;
+  --color-membership-grey:         #565e53;
+  --color-membership-light-grey:   #f6f6f7;
+
+  /* --- Typography: Responsive Scale (mobile-first) ------------------------- */
+  --type-sm:   14px;
+  --type-md:   16px;
+  --type-lg:   20px;
+  --type-ml:   24px;
+  --type-xl:   28px;
+  --type-2xl:  32px;
+  --type-hero: 36px;
+
+  /* --- Typography: Line Heights -------------------------------------------- */
+  --leading-body: 1.5;
+  --leading-headline: 1.1;
+
+  /* --- Spacing: Baseline --------------------------------------------------- */
+  --space-sm:   14px;
+  --space-md:   16px;
+  --space-lg:   20px;
+  --space-ml:   24px;
+  --space-xl:   28px;
+  --space-2xl:  32px;
+  --space-hero: 36px;
+
+  /* --- Spacing: Cap -------------------------------------------------------- */
+  --cap-sm:   10px;
+  --cap-md:   12px;
+  --cap-lg:   15px;
+  --cap-ml:   18px;
+  --cap-xl:   21px;
+  --cap-2xl:  24px;
+  --cap-hero: 27px;
+
+  /* --- Spacing: Page (responsive — mobile-first) --------------------------- */
+  --page:      24px;
+  --page-half: 12px;
+  --page-2x:   48px;
+  --page-3x:   72px;
+  --page-4x:   96px;
+
+  /* --- Page Width ---------------------------------------------------------- */
+  --page-width-full:         360px;
+  --page-width-with-margins: 312px;
+
+  /* --- Grid ---------------------------------------------------------------- */
+  --grid-cols:    2;
+  --grid-gutter:  24px;
+  --grid-offset:  24px;
+
+}
+
+/* Desktop overrides */
+@media (min-width: 768px) {
+  :root {
+    --type-sm:   16px;
+    --type-md:   18px;
+    --type-lg:   22px;
+    --type-ml:   30px;
+    --type-xl:   40px;
+    --type-2xl:  60px;
+    --type-hero: 80px;
+
+    --page:      48px;
+    --page-half: 24px;
+    --page-2x:   96px;
+    --page-3x:   144px;
+    --page-4x:   192px;
+
+    --grid-cols:    6;
+    --grid-gutter:  48px;
+    --grid-offset:  0px;
+  }
+}
