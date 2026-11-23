@@ -43,6 +43,19 @@
       </div>
     </div>
 
+    <!-- Mobile nav (< 768px) — Figma: Navigation, mobile (2386:39071) -->
+    <div class="site-nav__mobile">
+      <a class="site-nav__logo" href="#">
+        <img src="img/shared/logos/moma_logo_mobile.svg" alt="MoMA" width="113" height="28">
+      </a>
+      <div class="site-nav__mobile-actions">
+        <span class="btn btn--blue site-nav__mobile-tickets">Tickets</span>
+        <button class="site-nav__menu" aria-label="Menu">
+          <img src="img/shared/icons/Hamburger.svg" alt="" aria-hidden="true" width="28" height="28">
+        </button>
+      </div>
+    </div>
+
     <!-- Collapsed nav (shown after scrolling past exhibition title) -->
     <div class="site-nav__condensed">
       <div class="site-nav__condensed-inner">
@@ -69,201 +82,164 @@
   <!-- Exhibition Detail -->
   <main class="exhibition">
 
-    <!-- Exhibition Hero -->
-    <section class="exh-hero exh-hero--light" id="exh-header">
-      <div class="exh-hero__inner">
-
-        <div class="exh-hero__left">
-          <div class="exh-hero__tag">Now on view</div>
-          <h1 class="exh-hero__title">Ruth Asawa:<br> A Retrospective</h1>
-          <div class="exh-hero__date-group">
-            <p class="exh-hero__tagline">Don't miss this exhibition</p>
-            <div class="exh-hero__date-row">
-              <span class="exh-hero__date">On view through Sep 12</span>
-            </div>
-          </div>
-          <div class="exh-hero__ctas-group">
-            <div class="exh-hero__ctas">
-              <a class="exh-hero__cta exh-hero__cta--tickets" href="#">Get MoMA tickets</a>
-              <a class="exh-hero__cta exh-hero__cta--member" href="#">Become a member</a>
-            </div>
-            <p class="exh-hero__membership-note">This exhibition is <strong>free</strong> with a ticket or membership!<br>Not a member? Join today for as low as $75 per year.</p>
+    <!-- Exhibition Header + Carousel — Figma: desktop 2386:38710, mobile 2386:39068 -->
+    <section class="exh-masthead" id="exh-header">
+      <div class="exh-masthead__inner page-container">
+        <a class="exh-masthead__breadcrumb" href="#">
+          <img src="img/shared/icons/arrow-breadcrumb.svg" alt="" aria-hidden="true" width="14" height="14">
+          <span class="exh-masthead__breadcrumb-label">Current exhibitions</span>
+        </a>
+        <h1 class="exh-masthead__title">Ruth Asawa: A Retrospective</h1>
+        <div class="exh-masthead__row">
+          <p class="exh-masthead__date">On view through Sep 12</p>
+          <div class="exh-masthead__ctas">
+            <a class="btn exh-masthead__cta" href="#"><span class="exh-masthead__cta-prefix">Get&nbsp;</span>MoMA tickets</a>
+            <a class="btn btn--member exh-masthead__cta" href="#">Become a member</a>
           </div>
         </div>
-
-        <div class="exh-hero__right">
-          <div class="exh-hero__carousel-wrap">
-            <div class="exh-hero__carousel-track">
-              <div class="exh-hero__slide exh-hero__slide--active">
-                <img class="exh-hero__carousel-img" src="img/ruth-asawa/ra-hero-image.png" alt="">
-              </div>
-              <div class="exh-hero__slide">
-                <video class="exh-hero__video" autoplay loop muted playsinline>
-                  <source src="img/ruth-asawa/carousel/RA_hero.mp4">
-                </video>
-              </div>
-            </div>
-          </div>
-          <div class="exh-hero__dots">
-            <button class="exh-hero__dot exh-hero__dot--active" aria-label="Slide 1"></button>
-            <button class="exh-hero__dot" aria-label="Slide 2"></button>
-          </div>
-        </div>
-
       </div>
-    </section>
 
-    <!-- Events Teaser -->
-    <section class="events-teaser events-teaser--media">
-      <div class="events-teaser__inner page-container">
-        <p class="events-teaser__heading">Go beyond just visiting</p>
-        <div class="events-teaser__item">
-          <img class="events-teaser__thumb" src="img/ruth-asawa/a_Events/05-15-24_Drop-in-Family-Gallery-Talks-Modern-Materials_Gallery-Experience_Hero-Image 2.png" alt="Artist Party: Ruth Asawa">
-          <div class="events-teaser__item-body">
-            <a class="events-teaser__title" href="#">Artist Party: Ruth Asawa</a>
-            <p class="events-teaser__type">Party</p>
-            <p class="events-teaser__meta">Aug 29, 2026, 7:00 p.m.</p>
-          </div>
+      <!-- Carousel: active slide centered, neighbours peek in; loops. Order per Figma (dot 1 = wire sculpture). -->
+      <div class="hero-carousel" id="hero-carousel">
+        <div class="hero-carousel__viewport">
+          <div class="hero-carousel__slide"><img src="img/ruth-asawa/asawa-carousel-2.png" alt="" width="1532" height="856"></div>
+          <div class="hero-carousel__slide"><img src="img/ruth-asawa/asawa-carousel-3.png" alt="" width="1192" height="856"></div>
+          <div class="hero-carousel__slide"><img src="img/ruth-asawa/asawa-carousel-4.png" alt="" width="1534" height="856"></div>
+          <div class="hero-carousel__slide"><img src="img/ruth-asawa/asawa-carousel-1.png" alt="" width="856" height="856"></div>
         </div>
-        <div class="events-teaser__item">
-          <img class="events-teaser__thumb" src="img/ruth-asawa/ra_book_2.png" alt="Ruth Asawa: The Tamarind Prints">
-          <div class="events-teaser__item-body">
-            <a class="events-teaser__title" href="#">Ruth Asawa: The Tamarind Prints</a>
-            <p class="events-teaser__type">Publication</p>
-            <p class="events-teaser__meta">$35</p>
-          </div>
+        <div class="hero-carousel__dots">
+          <button class="hero-carousel__dot" aria-label="Slide 1"></button>
+          <button class="hero-carousel__dot" aria-label="Slide 2"></button>
+          <button class="hero-carousel__dot" aria-label="Slide 3"></button>
+          <button class="hero-carousel__dot" aria-label="Slide 4"></button>
         </div>
       </div>
     </section>
 
-    <!-- In-Page Navigation -->
+    <!-- Anchor Link Bar (sticky in-page navigation) -->
     <nav class="inpage-nav" id="inpage-nav" aria-label="Exhibition sections">
-      <div class="inpage-nav__inner page-container">
+      <div class="inpage-nav__inner">
         <ul class="inpage-nav__list">
           <li class="inpage-nav__item inpage-nav__item--active" data-section="overview">
-            <a href="#overview">About the exhibition</a>
+            <a href="#overview">About the exhibition <img class="inpage-nav__arrow" src="img/shared/icons/InPageNav_Arrow.svg" alt="" aria-hidden="true" width="14" height="14"></a>
           </li>
           <li class="inpage-nav__item inpage-nav__item--below" data-section="artists">
-            <a href="#artists">Artists <img class="inpage-nav__arrow" src="img/shared/icons/InPageNav_Arrow.svg" alt="" aria-hidden="true" width="16" height="16"></a>
+            <a href="#artists">Artists <img class="inpage-nav__arrow" src="img/shared/icons/InPageNav_Arrow.svg" alt="" aria-hidden="true" width="14" height="14"></a>
           </li>
           <li class="inpage-nav__item inpage-nav__item--below" data-section="events">
-            <a href="#events">Events <img class="inpage-nav__arrow" src="img/shared/icons/InPageNav_Arrow.svg" alt="" aria-hidden="true" width="16" height="16"></a>
-          </li>
-          <li class="inpage-nav__item inpage-nav__item--below" data-section="audio">
-            <a href="#audio">Audio <img class="inpage-nav__arrow" src="img/shared/icons/InPageNav_Arrow.svg" alt="" aria-hidden="true" width="16" height="16"></a>
+            <a href="#events">Events <img class="inpage-nav__arrow" src="img/shared/icons/InPageNav_Arrow.svg" alt="" aria-hidden="true" width="14" height="14"></a>
           </li>
           <li class="inpage-nav__item inpage-nav__item--below" data-section="catalogues">
-            <a href="#catalogues">Shop <img class="inpage-nav__arrow" src="img/shared/icons/InPageNav_Arrow.svg" alt="" aria-hidden="true" width="16" height="16"></a>
+            <a href="#catalogues">Shop <img class="inpage-nav__arrow" src="img/shared/icons/InPageNav_Arrow.svg" alt="" aria-hidden="true" width="14" height="14"></a>
+          </li>
+          <li class="inpage-nav__item inpage-nav__item--below" data-section="audio">
+            <a href="#audio">Audio <img class="inpage-nav__arrow" src="img/shared/icons/InPageNav_Arrow.svg" alt="" aria-hidden="true" width="14" height="14"></a>
           </li>
           <li class="inpage-nav__item inpage-nav__item--below" data-section="videos">
-            <a href="#videos">Videos and podcasts <img class="inpage-nav__arrow" src="img/shared/icons/InPageNav_Arrow.svg" alt="" aria-hidden="true" width="16" height="16"></a>
+            <a href="#videos">Videos and podcasts <img class="inpage-nav__arrow" src="img/shared/icons/InPageNav_Arrow.svg" alt="" aria-hidden="true" width="14" height="14"></a>
           </li>
           <li class="inpage-nav__item inpage-nav__item--below" data-section="articles">
-            <a href="#articles">Articles <img class="inpage-nav__arrow" src="img/shared/icons/InPageNav_Arrow.svg" alt="" aria-hidden="true" width="16" height="16"></a>
+            <a href="#articles">Articles <img class="inpage-nav__arrow" src="img/shared/icons/InPageNav_Arrow.svg" alt="" aria-hidden="true" width="14" height="14"></a>
           </li>
-          <li class="inpage-nav__item inpage-nav__item--below" data-section="research-resources">
-            <a href="#research-resources">Research <img class="inpage-nav__arrow" src="img/shared/icons/InPageNav_Arrow.svg" alt="" aria-hidden="true" width="16" height="16"></a>
+          <li class="inpage-nav__item inpage-nav__item--below" data-section="publications">
+            <a href="#publications">Publications <img class="inpage-nav__arrow" src="img/shared/icons/InPageNav_Arrow.svg" alt="" aria-hidden="true" width="14" height="14"></a>
           </li>
           <li class="inpage-nav__item inpage-nav__item--below" data-section="images">
-            <a href="#images">Exhibition images <img class="inpage-nav__arrow" src="img/shared/icons/InPageNav_Arrow.svg" alt="" aria-hidden="true" width="16" height="16"></a>
+            <a href="#images">Images <img class="inpage-nav__arrow" src="img/shared/icons/InPageNav_Arrow.svg" alt="" aria-hidden="true" width="14" height="14"></a>
           </li>
           <li class="inpage-nav__item inpage-nav__item--below" data-section="thanks">
-            <a href="#thanks">Special thanks <img class="inpage-nav__arrow" src="img/shared/icons/InPageNav_Arrow.svg" alt="" aria-hidden="true" width="16" height="16"></a>
-          </li>
-          <li class="inpage-nav__item inpage-nav__item--below" data-section="reading">
-            <a href="#reading">Further reading <img class="inpage-nav__arrow" src="img/shared/icons/InPageNav_Arrow.svg" alt="" aria-hidden="true" width="16" height="16"></a>
+            <a href="#thanks">Exhibition support <img class="inpage-nav__arrow" src="img/shared/icons/InPageNav_Arrow.svg" alt="" aria-hidden="true" width="14" height="14"></a>
           </li>
         </ul>
       </div>
     </nav>
 
-    <!-- Overview: meta + body copy + image/quote -->
-    <section class="exh-overview page-container" id="overview">
-      <div class="exh-overview__left">
-         <div class="exh-hero__actions">
-            <button class="exh-hero__action-btn">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 22C10.6333 22 9.34167 21.7375 8.125 21.2125C6.90833 20.6875 5.84583 19.9708 4.9375 19.0625C4.02917 18.1542 3.3125 17.0917 2.7875 15.875C2.2625 14.6583 2 13.3667 2 12C2 10.6167 2.2625 9.32083 2.7875 8.1125C3.3125 6.90417 4.02917 5.84583 4.9375 4.9375C5.84583 4.02917 6.90833 3.3125 8.125 2.7875C9.34167 2.2625 10.6333 2 12 2C13.3833 2 14.6792 2.2625 15.8875 2.7875C17.0958 3.3125 18.1542 4.02917 19.0625 4.9375C19.9708 5.84583 20.6875 6.90417 21.2125 8.1125C21.7375 9.32083 22 10.6167 22 12C22 13.3667 21.7375 14.6583 21.2125 15.875C20.6875 17.0917 19.9708 18.1542 19.0625 19.0625C18.1542 19.9708 17.0958 20.6875 15.8875 21.2125C14.6792 21.7375 13.3833 22 12 22ZM12 19.95C12.4333 19.35 12.8083 18.725 13.125 18.075C13.4417 17.425 13.7 16.7333 13.9 16H10.1C10.3 16.7333 10.5583 17.425 10.875 18.075C11.1917 18.725 11.5667 19.35 12 19.95ZM9.4 19.55C9.1 19 8.8375 18.4292 8.6125 17.8375C8.3875 17.2458 8.2 16.6333 8.05 16H5.1C5.58333 16.8333 6.1875 17.5583 6.9125 18.175C7.6375 18.7917 8.46667 19.25 9.4 19.55ZM14.6 19.55C15.5333 19.25 16.3625 18.7917 17.0875 18.175C17.8125 17.5583 18.4167 16.8333 18.9 16H15.95C15.8 16.6333 15.6125 17.2458 15.3875 17.8375C15.1625 18.4292 14.9 19 14.6 19.55ZM4.25 14H7.65C7.6 13.6667 7.5625 13.3375 7.5375 13.0125C7.5125 12.6875 7.5 12.35 7.5 12C7.5 11.65 7.5125 11.3125 7.5375 10.9875C7.5625 10.6625 7.6 10.3333 7.65 10H4.25C4.16667 10.3333 4.10417 10.6625 4.0625 10.9875C4.02083 11.3125 4 11.65 4 12C4 12.35 4.02083 12.6875 4.0625 13.0125C4.10417 13.3375 4.16667 13.6667 4.25 14ZM9.65 14H14.35C14.4 13.6667 14.4375 13.3375 14.4625 13.0125C14.4875 12.6875 14.5 12.35 14.5 12C14.5 11.65 14.4875 11.3125 14.4625 10.9875C14.4375 10.6625 14.4 10.3333 14.35 10H9.65C9.6 10.3333 9.5625 10.6625 9.5375 10.9875C9.5125 11.3125 9.5 11.65 9.5 12C9.5 12.35 9.5125 12.6875 9.5375 13.0125C9.5625 13.3375 9.6 13.6667 9.65 14ZM16.35 14H19.75C19.8333 13.6667 19.8958 13.3375 19.9375 13.0125C19.9792 12.6875 20 12.35 20 12C20 11.65 19.9792 11.3125 19.9375 10.9875C19.8958 10.6625 19.8333 10.3333 19.75 10H16.35C16.4 10.3333 16.4375 10.6625 16.4625 10.9875C16.4875 11.3125 16.5 11.65 16.5 12C16.5 12.35 16.4875 12.6875 16.4625 13.0125C16.4375 13.3375 16.4 13.6667 16.35 14ZM15.95 8H18.9C18.4167 7.16667 17.8125 6.44167 17.0875 5.825C16.3625 5.20833 15.5333 4.75 14.6 4.45C14.9 5 15.1625 5.57083 15.3875 6.1625C15.6125 6.75417 15.8 7.36667 15.95 8ZM10.1 8H13.9C13.7 7.26667 13.4417 6.575 13.125 5.925C12.8083 5.275 12.4333 4.65 12 4.05C11.5667 4.65 11.1917 5.275 10.875 5.925C10.5583 6.575 10.3 7.26667 10.1 8ZM5.1 8H8.05C8.2 7.36667 8.3875 6.75417 8.6125 6.1625C8.8375 5.57083 9.1 5 9.4 4.45C8.46667 4.75 7.6375 5.20833 6.9125 5.825C6.1875 6.44167 5.58333 7.16667 5.1 8Z" fill="currentColor"/></svg>
-              English
-              <svg width="10" height="6" viewBox="0 0 10 6" fill="none" aria-hidden="true"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </button>
-            <button class="exh-hero__action-btn">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 14H14V12H6V14ZM6 11H18V9H6V11ZM6 8H18V6H6V8ZM2 22V4C2 3.45 2.19583 2.97917 2.5875 2.5875C2.97917 2.19583 3.45 2 4 2H20C20.55 2 21.0208 2.19583 21.4125 2.5875C21.8042 2.97917 22 3.45 22 4V16C22 16.55 21.8042 17.0208 21.4125 17.4125C21.0208 17.8042 20.55 18 20 18H6L2 22ZM5.15 16H20V4H4V17.125L5.15 16Z" fill="currentColor"/></svg>
-              Hey MoMA
-            </button>
-            <button class="exh-hero__action-btn exh-hero__action-btn--icon" aria-label="Share">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M18 22C17.1667 22 16.4583 21.7083 15.875 21.125C15.2917 20.5417 15 19.8333 15 19C15 18.9 15.025 18.6667 15.075 18.3L8.05 14.2C7.78333 14.45 7.475 14.6458 7.125 14.7875C6.775 14.9292 6.4 15 6 15C5.16667 15 4.45833 14.7083 3.875 14.125C3.29167 13.5417 3 12.8333 3 12C3 11.1667 3.29167 10.4583 3.875 9.875C4.45833 9.29167 5.16667 9 6 9C6.4 9 6.775 9.07083 7.125 9.2125C7.475 9.35417 7.78333 9.55 8.05 9.8L15.075 5.7C15.0417 5.58333 15.0208 5.47083 15.0125 5.3625C15.0042 5.25417 15 5.13333 15 5C15 4.16667 15.2917 3.45833 15.875 2.875C16.4583 2.29167 17.1667 2 18 2C18.8333 2 19.5417 2.29167 20.125 2.875C20.7083 3.45833 21 4.16667 21 5C21 5.83333 20.7083 6.54167 20.125 7.125C19.5417 7.70833 18.8333 8 18 8C17.6 8 17.225 7.92917 16.875 7.7875C16.525 7.64583 16.2167 7.45 15.95 7.2L8.925 11.3C8.95833 11.4167 8.97917 11.5292 8.9875 11.6375C8.99583 11.7458 9 11.8667 9 12C9 12.1333 8.99583 12.2542 8.9875 12.3625C8.97917 12.4708 8.95833 12.5833 8.925 12.7L15.95 16.8C16.2167 16.55 16.525 16.3542 16.875 16.2125C17.225 16.0708 17.6 16 18 16C18.8333 16 19.5417 16.2917 20.125 16.875C20.7083 17.4583 21 18.1667 21 19C21 19.8333 20.7083 20.5417 20.125 21.125C19.5417 21.7083 18.8333 22 18 22Z" fill="currentColor"/></svg>
-            </button>
+    <!-- About the exhibition — Figma: desktop 2386:38738, mobile 2386:39098.
+         Desktop: main column (quote, text) + sidebar (meta, promo).
+         Mobile: single column — quote, meta, text, promo. -->
+    <section class="exh-about page-container" id="overview">
+
+      <p class="exh-about__quote">“Asawa’s work affirms the power of art to allow us to begin anew.” —The New York Times</p>
+
+      <div class="exh-about__text">
+        <div class="exh-about__body">
+          <p>Featuring some 300 artworks, <i>Ruth Asawa: A Retrospective</i> charts the artist’s lifelong explorations of materials and forms in a variety of mediums, including wire sculpture, bronze casts, drawings, paintings, prints, and public works. This first posthumous survey celebrates the ways in which Asawa continuously transformed materials and objects into subjects of contemplation, unsettling distinctions between abstraction and figuration, figure and ground, and negative and positive space.</p>
+          <p>Asawa made art every day, pursuing the inexhaustible possibilities offered by simple materials such as paper and wire since her days at Black Mountain College, where she studied in the late 1940s. Following a move to San Francisco in 1949, her practice grew exponentially as she produced a body of work ranging from endless variations of abstract looped-wire sculptures to calligraphic ink paintings.</p>
+          <p>Community was crucial to Asawa, who realized numerous public commissions—fountains, murals, and memorials—from the late 1960s onward, and stood at the forefront of arts education in the Bay Area and beyond. Taking a cue from her own work, <i>Ruth Asawa: A Retrospective</i> offers numerous points of entry into her art, encouraging close looking. It also reveals the model of integrated art practice cultivated by Asawa, for whom all acts held a creative potential and for whom there was no separation between living and making art.</p>
+        </div>
+
+        <p class="exh-about__curatorial"><i>Ruth Asawa: A Retrospective</i> is an exhibition partnership between the San Francisco Museum of Modern Art (SFMOMA) and The Museum of Modern Art, New York (MoMA). The exhibition is organized by Cara Manes, Associate Curator, Department of Painting and Sculpture, MoMA, and Janet Bishop, Thomas Weisel Family Chief Curator, SFMOMA; with Dominika Tylcz, Curatorial Assistant, Department of Painting and Sculpture, MoMA; and Marin Sarvé-Tarr, Assistant Curator, and William Hernández Luege, former Curatorial Associate, Painting and Sculpture, SFMOMA.</p>
+
+        <div class="exh-about__explore">
+          <h2 class="exh-about__explore-title">Explore more</h2>
+          <div class="exh-about__explore-links">
+            <a class="exh-about__explore-link" href="#">Explore the Ruth Asawa<span class="exh-about__desktop-only">: A Retrospective</span> kids guide in&nbsp;English&nbsp;<img src="img/shared/icons/Document.svg" alt="" aria-hidden="true" width="14" height="14"></a>
+            <a class="exh-about__explore-link" href="#">Explore the Ruth Asawa<span class="exh-about__desktop-only">: A Retrospective</span> kids guide in&nbsp;Spanish&nbsp;<img src="img/shared/icons/Document.svg" alt="" aria-hidden="true" width="14" height="14"></a>
           </div>
-        <div class="exh-overview__meta">
-          <div class="exh-overview__meta-col col-left">
-            <div class="exh-overview__meta-row">
-              <p class="exh-overview__meta-label">On view</p>
-              <p class="exh-overview__meta-value">Jun 30–Sep 12, 2026</p>
+        </div>
+      </div>
+
+      <!-- Sidebar (desktop). On mobile its children slot into the single column. -->
+      <aside class="exh-about__sidebar">
+        <div class="exh-about__meta">
+          <div class="exh-about__meta-list">
+            <div class="exh-about__meta-group exh-about__meta-group--location">
+              <p class="exh-about__meta-label">Location</p>
+              <div class="exh-about__meta-detail">
+                <p class="exh-about__meta-value">MoMA, Floor 6</p>
+                <p class="exh-about__meta-sub">The Steven and Alexandra Cohen Center for Special Exhibitions</p>
+                <a class="exh-about__map-link" href="#">View on map <img src="img/shared/icons/map.svg" alt="" aria-hidden="true" width="16" height="16"></a>
+              </div>
             </div>
-            <div class="exh-overview__meta-row">
-              <p class="exh-overview__meta-label">Member Last Looks</p>
-              <p class="exh-overview__meta-value">Sep 13–14, 2026</p>
+            <div class="exh-about__meta-group">
+              <p class="exh-about__meta-label">On view</p>
+              <p class="exh-about__meta-value">Jun 30–Sep 12, 2026</p>
+            </div>
+            <div class="exh-about__meta-group">
+              <p class="exh-about__meta-label">Member Last Looks</p>
+              <p class="exh-about__meta-value">Sep 13–14, 2026</p>
             </div>
           </div>
-          <div class="exh-overview__meta-col">
-            <p class="exh-overview__meta-label">Location</p>
-            <p class="exh-overview__meta-value">MoMA, Floor 6</p>
-            <p class="exh-overview__meta-sub">The Steven and Alexandra Cohen Center for Special Exhibitions</p>
-            <a class="exh-overview__map-link" href="#">View on map
-              <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M10 10H2V2H6V0H2C0.9 0 0 0.9 0 2V10C0 11.1 0.9 12 2 12H10C11.1 12 12 11.1 12 10V6H10V10ZM7 0V2H9.59L3.76 7.83L5.17 9.24L11 3.41V6H13V0H7Z" fill="black"/></svg>
+          <button class="exh-about__share" aria-label="Share">
+            <img src="img/shared/icons/share-24.svg" alt="" aria-hidden="true" width="24" height="24">
+          </button>
+        </div>
+
+        <!-- Promo bar: Go beyond the gallery (placeholder images) -->
+        <div class="exh-promo">
+          <h2 class="exh-promo__title">Go beyond the gallery</h2>
+          <div class="exh-promo__cards">
+            <a class="exh-promo__card" href="#">
+              <img class="exh-promo__image" src="img/ruth-asawa/a_Events/05-15-24_Drop-in-Family-Gallery-Talks-Modern-Materials_Gallery-Experience_Hero-Image 2.png" alt="">
+              <div class="exh-promo__card-text">
+                <p class="exh-promo__type">Party</p>
+                <p class="exh-promo__card-title">Artist Party:<br>Ruth Asawa&nbsp;→</p>
+                <p class="exh-promo__meta">Aug 29, 2026, 7:00 p.m.</p>
+              </div>
+            </a>
+            <a class="exh-promo__card" href="#">
+              <img class="exh-promo__image exh-promo__image--bottom" src="img/ruth-asawa/ra_book_2.png" alt="">
+              <div class="exh-promo__card-text">
+                <p class="exh-promo__type">Book</p>
+                <p class="exh-promo__card-title">Ruth Asawa:<br>The Tamarind Prints&nbsp;→</p>
+                <p class="exh-promo__meta">$35</p>
+              </div>
             </a>
           </div>
         </div>
+      </aside>
 
-        <div class="exh-overview__body">
-          <p>Featuring some 300 artworks, <i>Ruth Asawa: A Retrospective</i> charts the artist's lifelong explorations of materials and forms in a variety of mediums, including wire sculpture, bronze casts, drawings, paintings, prints, and public works. This first posthumous survey celebrates the ways in which Asawa continuously transformed materials and objects into subjects of contemplation, unsettling distinctions between abstraction and figuration, figure and ground, and negative and positive space.</p>
-          <p>Asawa made art every day, pursuing the inexhaustible possibilities offered by simple materials such as paper and wire since her days at Black Mountain College, where she studied in the late 1940s. Following a move to San Francisco in 1949, her practice grew exponentially as she produced a body of work ranging from endless variations of abstract looped-wire sculptures to calligraphic ink paintings.</p>
-          <p>Community was crucial to Asawa, who realized numerous public commissions—fountains, murals, and memorials—from the late 1960s onward, and stood at the forefront of arts education in the Bay Area and beyond. Taking a cue from her own work, <i>Ruth Asawa: A Retrospective</i> offers numerous points of entry into her art, encouraging close looking.</p>
-      <div class="exh-further__links">
-        <a class="exh-further__link" href="#">Explore the Ruth Asawa kids guide in English</a>
-        <a class="exh-further__link" href="#">Explore the Ruth Asawa kids guide in Spanish</a>
-      </div>
-          <!-- <div class="exh-overview__sponsors">
-            <div class="exh-overview__sponsor">
-              <img src="img/shared/logos/uniqlo.svg" alt="UNIQLO" width="119" height="53">
-              <p>Sponsorship for the exhibition is provided by UNIQLO, MoMA's partner of #ArtForAll.</p>
-            </div>
-            <div class="exh-overview__sponsor">
-              <img src="img/shared/logos/luce.svg" alt="Henry Luce Foundation" width="176" height="42">
-              <p>Significant support is provided through a grant from the Henry Luce Foundation.</p>
-            </div>
-            <a class="exh-overview__add-support" href="#">Additional support ↓</a>
-          </div> -->
-        </div>
-      </div>
+    </section>
 
-      <div class="exh-overview__right">
-        <div class="exh-overview__image-wrap">
-          <img class="exh-overview__image" src="img/ruth-asawa/RA_video_thumbnail.png" alt="Ruth Asawa wire sculpture">
+    <!-- Membership Banner — Figma: BannerPromo (desktop 2386:38791, mobile 2386:39131); prototype copy -->
+    <section class="member-banner">
+      <div class="member-banner__inner">
+        <div class="member-banner__col">
+          <p class="member-banner__heading">Explore Ruth Asawa and today’s must-see art as a member</p>
         </div>
-        <div class="exh-overview__quote-box">
-          <blockquote class="exh-overview__quote">“Asawa’s work affirms the power of art to allow us to begin anew.”</blockquote>
-          <p class="exh-overview__quote-source">— The New York Times</p>
-        </div>
-
-               <div class="exh-overview__curatorial">
-          <p><i>Ruth Asawa: A Retrospective</i> is an exhibition partnership between the San Francisco Museum of Modern Art (SFMOMA) and The Museum of Modern Art, New York (MoMA). The exhibition is organized by Cara Manes, Associate Curator, Department of Painting and Sculpture, MoMA, and Janet Bishop, Thomas Weisel Family Chief Curator, SFMOMA; with Dominika Tylcz, Curatorial Assistant, Department of Painting and Sculpture, MoMA; and Marin Sarvé-Tarr, Assistant Curator, and William Hernández Luege, former Curatorial Associate, Painting and Sculpture, SFMOMA.</p>
-        </div>
-      </div>
-
-        </section>
-
-        <!-- BannerPromo: Membership -->
-    <section class="banner-promo banner-promo--member">
-      <div class="banner-promo__member-inner page-container">
-        <div class="banner-promo__member-left">
-          <p class="banner-promo__member-heading">Explore Ruth Asawa and today’s must-see art as a member
-</p>
-        </div>
-        <div class="banner-promo__member-right">
-          <p class="banner-promo__member-body">Get free admission, $5 guests, exhibition previews, film tickets, exclusive events, and more for as little as $10 a month.
-</p>
-          <a class="exh-hero__cta exh-hero__cta--member-green" href="#">Become a member</a>
+        <div class="member-banner__col member-banner__col--right">
+          <p class="member-banner__body">Get free admission, $5 guests, exhibition previews, film tickets, exclusive events, and more for as little as $10 a month.</p>
+          <a class="btn btn--member-dark member-banner__cta" href="#">Become a member</a>
 
           <!-- <a class="banner-promo__member-link" href="#">Join today</a> -->
         </div>
@@ -415,6 +391,35 @@
       </div>
     </section>
 
+    <!-- Shop / Catalogues and more -->
+    <section class="exh-section page-container" id="catalogues">
+      <div class="exh-section__header">
+        <h2 class="exh-section__title">Shop</h2>
+      </div>
+      <div class="store-cards">
+        <article class="store-card">
+          <img class="store-card__image" src="img/ruth-asawa/ra_book.png" alt="Ruth Asawa: A Retrospective — catalogue">
+          <p class="store-card__title">Ruth Asawa: A Retrospective</p>
+          <p class="store-card__price">$75.00</p>
+        </article>
+        <article class="store-card">
+          <img class="store-card__image" src="img/ruth-asawa/ra_book_2.png" alt="Ruth Asawa: Life's Work">
+          <p class="store-card__title">Ruth Asawa: Life's Work</p>
+          <p class="store-card__price">$50.00</p>
+        </article>
+        <article class="store-card">
+          <img class="store-card__image" src="img/ruth-asawa/ra_bandana.png" alt="Ruth Asawa Bandana">
+          <p class="store-card__title">Ruth Asawa Bandana</p>
+          <p class="store-card__price">$22.00</p>
+        </article>
+        <article class="store-card">
+          <img class="store-card__image" src="img/ruth-asawa/ra_pencil.png" alt="Ruth Asawa Pencil Set">
+          <p class="store-card__title">Ruth Asawa Pencil Set</p>
+          <p class="store-card__price">$18.00</p>
+        </article>
+      </div>
+    </section>
+
     <!-- Audio Guide -->
     <section class="exh-audio" id="audio">
       <div class="exh-audio__inner page-container">
@@ -480,35 +485,6 @@
             </button>
           </div>
         </div>
-      </div>
-    </section>
-
-    <!-- Shop / Catalogues and more -->
-    <section class="exh-section page-container" id="catalogues">
-      <div class="exh-section__header">
-        <h2 class="exh-section__title">Shop</h2>
-      </div>
-      <div class="store-cards">
-        <article class="store-card">
-          <img class="store-card__image" src="img/ruth-asawa/ra_book.png" alt="Ruth Asawa: A Retrospective — catalogue">
-          <p class="store-card__title">Ruth Asawa: A Retrospective</p>
-          <p class="store-card__price">$75.00</p>
-        </article>
-        <article class="store-card">
-          <img class="store-card__image" src="img/ruth-asawa/ra_book_2.png" alt="Ruth Asawa: Life's Work">
-          <p class="store-card__title">Ruth Asawa: Life's Work</p>
-          <p class="store-card__price">$50.00</p>
-        </article>
-        <article class="store-card">
-          <img class="store-card__image" src="img/ruth-asawa/ra_bandana.png" alt="Ruth Asawa Bandana">
-          <p class="store-card__title">Ruth Asawa Bandana</p>
-          <p class="store-card__price">$22.00</p>
-        </article>
-        <article class="store-card">
-          <img class="store-card__image" src="img/ruth-asawa/ra_pencil.png" alt="Ruth Asawa Pencil Set">
-          <p class="store-card__title">Ruth Asawa Pencil Set</p>
-          <p class="store-card__price">$18.00</p>
-        </article>
       </div>
     </section>
 
@@ -649,6 +625,50 @@
       <a class="article-cards__view-all" href="#">View all Magazine articles about Ruth Asawa</a>
     </section>
 
+    <!-- Publications (placeholder — anchor target for the link bar) -->
+    <section class="exh-section page-container" id="publications">
+      <div class="exh-section__header">
+        <h2 class="exh-section__title">Publications</h2>
+      </div>
+      <p>Placeholder — publications content to come.</p>
+    </section>
+
+    <!-- Exhibition Images -->
+    <section class="exh-section page-container r1-a-images" id="images">
+      <div class="exh-section__header">
+        <h2 class="exh-section__title">Exhibition images</h2>
+        <div class="exh-section__arrows" aria-label="Scroll images">
+          <!-- <button class="exh-section__arrow exh-section__arrow--prev" aria-label="Previous"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g opacity="0.25">
+<path d="M22.5 12L5.5 12" stroke="#002E61" stroke-width="3"/>
+<path d="M11.5 20L3.5 12L11.5 4" stroke="#002E61" stroke-width="3"/>
+</g>
+</svg></button>
+          <button class="exh-section__arrow" aria-label="Next"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M1.5 12L18.5 12" stroke="#002E61" stroke-width="3"/>
+<path d="M12.5 20L20.5 12L12.5 4" stroke="#002E61" stroke-width="3"/>
+</svg></button> -->
+        </div>
+      </div>
+      <div class="image-rows">
+        <div class="image-rows__row">
+          <img class="image-rows__img" src="img/ruth-asawa/install-images/install-1.png" alt="Ruth Asawa exhibition view">
+          <img class="image-rows__img" src="img/ruth-asawa/install-images/install-2.png" alt="Ruth Asawa exhibition view">
+          <img class="image-rows__img" src="img/ruth-asawa/install-images/install-3.png" alt="Ruth Asawa exhibition view">
+          <img class="image-rows__img" src="img/ruth-asawa/install-images/install-4.png" alt="Ruth Asawa exhibition view">
+          <img class="image-rows__img" src="img/ruth-asawa/install-images/install-5.png" alt="Ruth Asawa exhibition view">
+        </div>
+        <div class="image-rows__row">
+          <img class="image-rows__img" src="img/ruth-asawa/install-images/install-6.png" alt="Ruth Asawa exhibition view">
+          <img class="image-rows__img" src="img/ruth-asawa/install-images/install-7.png" alt="Ruth Asawa exhibition view">
+          <img class="image-rows__img" src="img/ruth-asawa/install-images/install-8.png" alt="Ruth Asawa exhibition view">
+          <img class="image-rows__img" src="img/ruth-asawa/install-images/install-9.png" alt="Ruth Asawa exhibition view">
+          <img class="image-rows__img" src="img/ruth-asawa/install-images/install-10.png" alt="Ruth Asawa exhibition view">
+        </div>
+      </div>
+      <a class="images__show-more" href="#">Show more images +</a>
+    </section>
+
     <!-- Research Resources -->
     <section class="exh-section page-container" id="research-resources" data-accordion-id="research-resources">
       <div class="accordion__header">
@@ -690,42 +710,6 @@
 
         </div>
       </div>
-    </section>
-
-    <!-- Exhibition Images -->
-    <section class="exh-section page-container r1-a-images" id="images">
-      <div class="exh-section__header">
-        <h2 class="exh-section__title">Exhibition images</h2>
-        <div class="exh-section__arrows" aria-label="Scroll images">
-          <!-- <button class="exh-section__arrow exh-section__arrow--prev" aria-label="Previous"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-<g opacity="0.25">
-<path d="M22.5 12L5.5 12" stroke="#002E61" stroke-width="3"/>
-<path d="M11.5 20L3.5 12L11.5 4" stroke="#002E61" stroke-width="3"/>
-</g>
-</svg></button>
-          <button class="exh-section__arrow" aria-label="Next"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M1.5 12L18.5 12" stroke="#002E61" stroke-width="3"/>
-<path d="M12.5 20L20.5 12L12.5 4" stroke="#002E61" stroke-width="3"/>
-</svg></button> -->
-        </div>
-      </div>
-      <div class="image-rows">
-        <div class="image-rows__row">
-          <img class="image-rows__img" src="img/ruth-asawa/install-images/install-1.png" alt="Ruth Asawa exhibition view">
-          <img class="image-rows__img" src="img/ruth-asawa/install-images/install-2.png" alt="Ruth Asawa exhibition view">
-          <img class="image-rows__img" src="img/ruth-asawa/install-images/install-3.png" alt="Ruth Asawa exhibition view">
-          <img class="image-rows__img" src="img/ruth-asawa/install-images/install-4.png" alt="Ruth Asawa exhibition view">
-          <img class="image-rows__img" src="img/ruth-asawa/install-images/install-5.png" alt="Ruth Asawa exhibition view">
-        </div>
-        <div class="image-rows__row">
-          <img class="image-rows__img" src="img/ruth-asawa/install-images/install-6.png" alt="Ruth Asawa exhibition view">
-          <img class="image-rows__img" src="img/ruth-asawa/install-images/install-7.png" alt="Ruth Asawa exhibition view">
-          <img class="image-rows__img" src="img/ruth-asawa/install-images/install-8.png" alt="Ruth Asawa exhibition view">
-          <img class="image-rows__img" src="img/ruth-asawa/install-images/install-9.png" alt="Ruth Asawa exhibition view">
-          <img class="image-rows__img" src="img/ruth-asawa/install-images/install-10.png" alt="Ruth Asawa exhibition view">
-        </div>
-      </div>
-      <a class="images__show-more" href="#">Show more images +</a>
     </section>
 
     <!-- Special Thanks -->
@@ -853,14 +837,46 @@
       var fullNavHeight = nav.offsetHeight;
       document.body.style.paddingTop = fullNavHeight + 'px';
 
-      // Build list of tracked sections from inpage nav items
+      // Space between the bottom of the anchor bar and the top of a section's title text
+      var TITLE_GAP = 48;
+
+      // Build list of tracked sections from inpage nav items. Each section's "title" is its
+      // first line of text (heading, or e.g. the quote / "Audio guide" label).
       var tracked = [];
       if (inpageNav) {
         var items = inpageNav.querySelectorAll('.inpage-nav__item[data-section]');
         items.forEach(function (item) {
           var section = document.getElementById(item.dataset.section);
-          if (section) tracked.push({ item: item, section: section });
+          if (section) {
+            tracked.push({ item: item, section: section, title: section.querySelector('h1, h2, h3, p') || section, capOffset: 0 });
+          }
         });
+      }
+
+      // How far each title's cap height sits below the top of its box (half-leading + ascender
+      // space). Measured by comparing the text's position with and without CSS text-box trim.
+      function firstTextNode(el) {
+        var walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, {
+          acceptNode: function (n) { return n.textContent.trim() ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_SKIP; }
+        });
+        return walker.nextNode();
+      }
+      function measureCapOffsets() {
+        tracked.forEach(function (obj) {
+          var text = firstTextNode(obj.title);
+          if (!text) { obj.capOffset = 0; return; }
+          var range = document.createRange();
+          range.selectNodeContents(text);
+          var inline = obj.title.style.textBox;
+          var current = range.getBoundingClientRect().top;      // as rendered (may already be trimmed by CSS)
+          obj.title.style.textBox = 'trim-both cap alphabetic';
+          var trimmed = range.getBoundingClientRect().top;      // text top = cap top = box top
+          obj.title.style.textBox = inline;
+          obj.capOffset = Math.max(0, current - trimmed);
+        });
+      }
+      function titleTop(obj) {
+        return obj.title.getBoundingClientRect().top + obj.capOffset;
       }
 
       function updateInpageTop() {
@@ -872,20 +888,54 @@
         }
       }
 
+      // All breakpoints: if the active link is outside the visible part of the bar, slide
+      // the bar just enough to bring it into view — aligned to the left or right content
+      // edge, whichever side it was hidden on. If it's already visible, the bar doesn't move.
+      var linkScroller = inpageNav ? inpageNav.querySelector('.inpage-nav__inner') : null;
+      var lastActiveIndex = -1;
+
+      function revealActiveItem(item) {
+        if (!linkScroller) return;
+        var style = getComputedStyle(linkScroller);
+        var frame = linkScroller.getBoundingClientRect();
+        var left = frame.left + (parseFloat(style.paddingLeft) || 0);
+        var right = frame.right - (parseFloat(style.paddingRight) || 0);
+        // Measure the label text only (the active link's arrow is invisible but still takes space)
+        var text = item.querySelector('a').firstChild;
+        var range = document.createRange();
+        range.setStart(text, 0);
+        range.setEnd(text, text.textContent.trimEnd().length);
+        var link = range.getBoundingClientRect();
+        var delta = 0;
+        if (link.left < left) {
+          delta = link.left - left;            // hidden off the left: slide right
+        } else if (link.right > right) {
+          delta = link.right - right;          // hidden off the right: slide left
+        }
+        if (delta) linkScroller.scrollBy({ left: delta, behavior: 'smooth' });
+      }
+
       function updateActiveSection() {
         if (!tracked.length) return;
-        var threshold = nav.offsetHeight + (inpageNav ? inpageNav.offsetHeight : 0) + 20;
-        var activeIndex = 0;
-        for (var i = 0; i < tracked.length; i++) {
-          if (tracked[i].section.getBoundingClientRect().top <= threshold) {
-            activeIndex = i;
-          }
+        // A section becomes active once its title text reaches TITLE_GAP below the bar —
+        // the same spot an anchor click scrolls it to (+1px for rounding).
+        var threshold = nav.offsetHeight + (inpageNav ? inpageNav.offsetHeight : 0) + TITLE_GAP + 1;
+        // Active = the lowest title on the page that has passed the threshold.
+        // Uses page position (not link order), so links can be ordered independently of the DOM.
+        var tops = tracked.map(titleTop);
+        var activeIndex = tops.indexOf(Math.min.apply(null, tops));
+        tops.forEach(function (top, i) {
+          if (top <= threshold && top > tops[activeIndex]) activeIndex = i;
+        });
+        if (activeIndex !== lastActiveIndex) {
+          lastActiveIndex = activeIndex;
+          revealActiveItem(tracked[activeIndex].item);
         }
         tracked.forEach(function (obj, i) {
           obj.item.classList.remove('inpage-nav__item--active', 'inpage-nav__item--above', 'inpage-nav__item--below');
           if (i === activeIndex) {
             obj.item.classList.add('inpage-nav__item--active');
-          } else if (i < activeIndex) {
+          } else if (tops[i] < tops[activeIndex]) {
             obj.item.classList.add('inpage-nav__item--above');
           } else {
             obj.item.classList.add('inpage-nav__item--below');
@@ -900,30 +950,147 @@
         updateActiveSection();
       }
 
+      // Anchor link clicks: scroll so the section's title text sits TITLE_GAP below the bar.
+      // The global nav collapses (desktop) partway through the scroll, so use the nav
+      // height it will have once the scroll ends, not the height at click time.
+      function navHeightIfCollapsed(collapsed) {
+        var was = nav.classList.contains('site-nav--collapsed');
+        nav.classList.toggle('site-nav--collapsed', collapsed);
+        var h = nav.offsetHeight;
+        nav.classList.toggle('site-nav--collapsed', was);
+        return h;
+      }
+
+      if (inpageNav) {
+        inpageNav.addEventListener('click', function (e) {
+          var link = e.target.closest('.inpage-nav__item[data-section] a');
+          var obj = link && tracked.filter(function (o) { return o.item.contains(link); })[0];
+          if (!obj) return;
+          e.preventDefault();
+          var titleY = titleTop(obj) + window.scrollY;
+          var triggerY = trigger.getBoundingClientRect().bottom + window.scrollY;
+          var barH = inpageNav.offsetHeight;
+          // Try the collapsed nav first; if the header would still be visible there, the nav stays full
+          var dest = titleY - TITLE_GAP - barH - navHeightIfCollapsed(true);
+          if (triggerY - dest >= fullNavHeight) {
+            dest = titleY - TITLE_GAP - barH - navHeightIfCollapsed(false);
+          }
+          window.scrollTo({ top: Math.max(0, dest), behavior: 'smooth' });
+          history.replaceState(null, '', '#' + obj.section.id);
+        });
+      }
+
       window.addEventListener('scroll', update, { passive: true });
+      // Cap offsets depend on font size, so re-measure once fonts load and on resize
+      window.addEventListener('resize', function () { measureCapOffsets(); update(); });
+      if (document.fonts) document.fonts.ready.then(function () { measureCapOffsets(); update(); });
+      measureCapOffsets();
       updateInpageTop();
       update();
     })();
 
-    // Hero carousel
+    // Header carousel — native horizontal scroll with center snapping (trackpad, shift+wheel,
+    // touch swipe, mouse drag), dots, and click-a-peeking-slide. Loops: a cloned set of slides
+    // sits on each side, and when scrolling settles inside a clone set we silently jump back
+    // to the same slide in the real (middle) set.
     (function () {
-      var track = document.querySelector('.exh-hero__carousel-track');
-      if (!track) return;
-      var slides = track.querySelectorAll('.exh-hero__slide');
-      var dots = document.querySelectorAll('.exh-hero__dot');
-      var current = 0;
+      var root = document.getElementById('hero-carousel');
+      if (!root) return;
+      var viewport = root.querySelector('.hero-carousel__viewport');
+      var originals = [].slice.call(viewport.querySelectorAll('.hero-carousel__slide'));
+      var dots = [].slice.call(root.querySelectorAll('.hero-carousel__dot'));
+      var n = originals.length;
 
-      function goTo(index) {
-        slides[current].classList.remove('exh-hero__slide--active');
-        dots[current].classList.remove('exh-hero__dot--active');
-        current = index;
-        slides[current].classList.add('exh-hero__slide--active');
-        dots[current].classList.add('exh-hero__dot--active');
+      // [clones][originals][clones]
+      originals.forEach(function (s) {
+        var c = s.cloneNode(true);
+        c.setAttribute('aria-hidden', 'true');
+        viewport.appendChild(c);
+      });
+      originals.slice().reverse().forEach(function (s) {
+        var c = s.cloneNode(true);
+        c.setAttribute('aria-hidden', 'true');
+        viewport.insertBefore(c, viewport.firstChild);
+      });
+      var all = [].slice.call(viewport.querySelectorAll('.hero-carousel__slide'));
+
+      function centerOf(el) { return el.offsetLeft + el.offsetWidth / 2; }
+      function scrollToSlide(el, smooth) {
+        viewport.scrollTo({ left: centerOf(el) - viewport.clientWidth / 2, behavior: smooth ? 'smooth' : 'instant' });
+      }
+      function nearestIndex() {
+        var mid = viewport.scrollLeft + viewport.clientWidth / 2;
+        var best = 0;
+        all.forEach(function (el, i) {
+          if (Math.abs(centerOf(el) - mid) < Math.abs(centerOf(all[best]) - mid)) best = i;
+        });
+        return best;
       }
 
-      dots.forEach(function (dot, i) {
-        dot.addEventListener('click', function () { goTo(i); });
+      function updateActive() {
+        var i = nearestIndex();
+        all.forEach(function (el, k) { el.classList.toggle('hero-carousel__slide--active', k === i); });
+        dots.forEach(function (d, k) { d.classList.toggle('hero-carousel__dot--active', k === i % n); });
+      }
+
+      // Once scrolling settles, jump from a clone back into the real set (same picture, no visible change)
+      var settleTimer;
+      function settle() {
+        var i = nearestIndex();
+        if (i < n || i >= 2 * n) scrollToSlide(all[n + (i % n)], false);
+        updateActive();
+      }
+      viewport.addEventListener('scroll', function () {
+        updateActive();
+        clearTimeout(settleTimer);
+        settleTimer = setTimeout(settle, 150);
+      }, { passive: true });
+
+      // Dots: go to the nearest copy of that slide so it scrolls the short way round
+      dots.forEach(function (dot, d) {
+        dot.addEventListener('click', function () {
+          var mid = viewport.scrollLeft + viewport.clientWidth / 2;
+          var copies = [all[d], all[n + d], all[2 * n + d]];
+          copies.sort(function (a, b) { return Math.abs(centerOf(a) - mid) - Math.abs(centerOf(b) - mid); });
+          scrollToSlide(copies[0], true);
+        });
       });
+
+      // Mouse: drag to scroll; a click without dragging centers the clicked slide
+      var drag = null;
+      viewport.addEventListener('pointerdown', function (e) {
+        if (e.pointerType !== 'mouse') return;
+        drag = { x: e.clientX, left: viewport.scrollLeft, moved: false };
+      });
+      window.addEventListener('pointermove', function (e) {
+        if (!drag) return;
+        var dx = e.clientX - drag.x;
+        if (Math.abs(dx) > 4 && !drag.moved) {
+          drag.moved = true;
+          viewport.style.scrollSnapType = 'none';
+        }
+        if (drag.moved) viewport.scrollLeft = drag.left - dx;
+      });
+      window.addEventListener('pointerup', function (e) {
+        if (!drag) return;
+        var wasDrag = drag.moved;
+        drag = null;
+        viewport.style.scrollSnapType = '';
+        if (wasDrag) {
+          scrollToSlide(all[nearestIndex()], true);
+        } else {
+          var hit = all.filter(function (el) {
+            var r = el.getBoundingClientRect();
+            return e.clientX >= r.left && e.clientX <= r.right && e.target.closest('.hero-carousel__viewport');
+          })[0];
+          if (hit) scrollToSlide(hit, true);
+        }
+      });
+      viewport.addEventListener('dragstart', function (e) { e.preventDefault(); });
+
+      window.addEventListener('resize', function () { scrollToSlide(all[n + (nearestIndex() % n)], false); });
+      scrollToSlide(all[n], false);
+      updateActive();
     })();
 
     // Events carousel arrows

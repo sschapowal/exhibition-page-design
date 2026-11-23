@@ -75,6 +75,7 @@
   --leading-headline: 1.1;
 
   /* --- Spacing: Baseline --------------------------------------------------- */
+  --space-xxs:  8px;
   --space-sm:   14px;
   --space-md:   16px;
   --space-lg:   20px;
@@ -99,9 +100,28 @@
   --page-3x:   72px;
   --page-4x:   96px;
 
+  /* --- Spacing: Units (responsive — mirrors Figma "spacing-units/*") ------- */
+  --spacing-xxs: 8px;
+  --spacing-sm:  24px;
+  --spacing-md:  32px;
+  --spacing-lg:  48px;
+  --spacing-xl:  64px;
+
+  /* --- Exhibition meta (label → value) ------------------------------------- */
+  --meta-gap: 12px;
+
+  /* --- Membership banner: space before / after (Figma) --------------------- */
+  --banner-space-before: 48px;
+  --banner-space-after:  96px;
+
+  /* --- Exhibition header --------------------------------------------------- */
+  --exh-header-offset: 32px;   /* global nav → breadcrumb */
+  --carousel-height:   211px;
+
   /* --- Page Width ---------------------------------------------------------- */
   --page-width-full:         360px;
   --page-width-with-margins: 312px;
+  --content-width:           1184px;
 
   /* --- Grid ---------------------------------------------------------------- */
   --grid-cols:    2;
@@ -120,6 +140,18 @@
     --type-xl:   40px;
     --type-2xl:  60px;
     --type-hero: 80px;
+
+    --spacing-xxs: 12px;
+    --spacing-sm:  32px;
+    --spacing-md:  48px;
+
+    --meta-gap: 16px;
+
+    --banner-space-before: 128px;
+    --banner-space-after:  128px;
+
+    --exh-header-offset: 40px;
+    --carousel-height:   428px;
 
     --page:      48px;
     --page-half: 24px;

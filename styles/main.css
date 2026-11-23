@@ -337,21 +337,593 @@ body {
   --btn-color: var(--color-black);
 }
 
+.btn--member {
+  --btn-bg:    var(--color-membership-light-blue);
+  --btn-color: var(--color-membership-dark-purple);
+}
+
+
+/* --- Exhibition Header + Carousel ------------------------------------------- */
+/* Figma: Exhibition header (desktop 2386:38711, mobile 2386:39072) and
+   carousel (desktop 2386:38712, mobile 2386:39073). */
+
+.exh-masthead {
+  padding-top: var(--exh-header-offset);
+  padding-bottom: var(--spacing-xl);
+}
+
+.exh-masthead__inner {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  max-width: calc(var(--content-width) + 2 * var(--page));
+}
+
+.exh-masthead__breadcrumb {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  width: fit-content;
+  font-size: var(--type-md);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.36px;
+  text-decoration: none;
+  color: var(--color-black);
+}
+
+/* text-box trims text to cap height / baseline, matching Figma's text-box-trim,
+   so the gaps between header elements measure the same as the design */
+.exh-masthead__breadcrumb-label,
+.exh-masthead__title,
+.exh-masthead__date {
+  text-box: trim-both cap alphabetic;
+}
+
+.exh-masthead__breadcrumb-label {
+  display: block;
+}
+
+.exh-masthead__title {
+  font-size: var(--type-hero);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -1.6px;
+}
+
+.exh-masthead__row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--spacing-md);
+}
+
+.exh-masthead__date {
+  flex: 1 0 auto;
+  font-size: var(--type-lg);
+  font-weight: 700;
+  line-height: 25px;
+  letter-spacing: -0.44px;
+}
+
+.exh-masthead__ctas {
+  display: flex;
+  gap: var(--spacing-xxs);
+}
+
+/* Mobile: 10px padding gives Figma's 36px button height (Figma trims text to cap height) */
+.exh-masthead__cta {
+  padding: var(--cap-sm);
+}
+
+.exh-masthead__cta-prefix {
+  display: none;
+}
+
+.hero-carousel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-sm);
+  margin-top: var(--spacing-md);
+}
+
+/* Native horizontal scroll (trackpad, shift+wheel, touch) with each slide snapping to center.
+   JS adds a cloned set of slides on each side so it loops. */
+.hero-carousel__viewport {
+  position: relative;
+  display: flex;
+  gap: var(--page-half);
+  overflow-x: auto;
+  width: 100%;
+  height: var(--carousel-height);
+  scroll-snap-type: x mandatory;
+  overscroll-behavior-x: contain;
+  scrollbar-width: none;
+}
+
+.hero-carousel__viewport::-webkit-scrollbar {
+  display: none;
+}
+
+.hero-carousel__slide {
+  flex: none;
+  height: 100%;
+  scroll-snap-align: center;
+  cursor: pointer;
+}
+
+.hero-carousel__slide--active {
+  cursor: default;
+}
+
+/* Width follows each image's aspect ratio; on mobile the active slide is capped so neighbours peek in */
+.hero-carousel__slide img {
+  display: block;
+  width: auto;
+  max-width: calc(100vw - 2 * (var(--page) + var(--page-half)));
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+}
+
+.hero-carousel__dots {
+  display: flex;
+  gap: 4px;
+}
+
+.hero-carousel__dot {
+  width: 8px;
+  height: 8px;
+  padding: 0;
+  border: none;
+  background: var(--color-black);
+  opacity: 0.4;
+  cursor: pointer;
+}
+
+.hero-carousel__dot--active {
+  opacity: 1;
+}
+
+@media (min-width: 768px) {
+  .exh-masthead__cta {
+    padding: var(--cap-md);
+  }
+
+  .exh-masthead__cta-prefix {
+    display: inline;
+  }
+}
+
+/* Mobile nav — Figma: Navigation, mobile (2386:39071).
+   Logo + Tickets + hamburger; replaces the full/condensed navs below 768px. */
+.site-nav__mobile {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-lg) var(--page);
+}
+
+.site-nav__mobile .site-nav__logo img {
+  width: 112.7px;
+  height: 28.4px;
+}
+
+.site-nav__mobile-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--page);
+}
+
+/* 10px all round gives Figma's 36px button height (Figma trims the text box to cap height) */
+.site-nav__mobile-tickets {
+  padding: var(--cap-sm);
+}
+
+.site-nav__menu {
+  display: flex;
+  padding: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+/* Only pages that include the mobile nav markup swap it in (other prototypes keep their old nav) */
 @media (max-width: 767px) {
-  .site-nav__left {
-    gap: 12px;
-  }
-  .site-nav__logo img {
-    height: 36px;
-  }
-  .site-nav__links {
-    gap: var(--space-lg);
-  }
-  .site-nav__link {
-    font-size: var(--type-md);
-  }
-  .site-nav__right {
+  .site-nav:has(.site-nav__mobile) .site-nav__full {
     display: none;
+  }
+}
+
+@media (min-width: 768px) {
+  .site-nav__mobile {
+    display: none;
+  }
+}
+
+
+/* --- About the Exhibition (overview + sidebar) ------------------------------ */
+/* Figma: desktop 2386:38738, mobile 2386:39098.
+   Mobile: one column — quote, meta, text, promo (the sidebar uses display: contents
+   so its children slot into the column). Desktop: main column + 363px sidebar. */
+
+.exh-about {
+  display: grid;
+  grid-template-areas:
+    "quote"
+    "meta"
+    "text"
+    "promo";
+  grid-template-columns: minmax(0, 1fr);
+  row-gap: var(--spacing-lg);
+  padding-top: var(--spacing-md);
+  padding-bottom: var(--spacing-lg);
+  max-width: calc(var(--content-width) + 2 * var(--page));
+}
+
+/* Trim text boxes to cap height / baseline like Figma, so gaps match the design */
+.exh-about__quote,
+.exh-about__body,
+.exh-about__curatorial,
+.exh-about__explore-title,
+.exh-about__explore-link,
+.exh-about__meta-label,
+.exh-about__meta-value,
+.exh-about__meta-sub,
+.exh-about__map-link,
+.exh-promo__title,
+.exh-promo__type,
+.exh-promo__card-title,
+.exh-promo__meta {
+  text-box: trim-both cap alphabetic;
+}
+
+.exh-about__quote {
+  grid-area: quote;
+  font-size: var(--type-lg);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.44px;
+  text-indent: -0.45em;          /* hanging opening quote mark */
+  hanging-punctuation: none;
+}
+
+.exh-about__text {
+  display: flex;
+  grid-area: text;
+  flex-direction: column;
+  gap: var(--page);
+}
+
+.exh-about__body {
+  font-size: var(--type-md);
+  line-height: 24px;
+}
+
+.exh-about__body p + p {
+  margin-top: 24px;
+}
+
+.exh-about__curatorial {
+  font-size: var(--type-sm);
+  line-height: 20px;
+}
+
+.exh-about__explore {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+  margin-top: calc(var(--spacing-md) - var(--page));   /* mobile: 32px after curatorial text */
+}
+
+.exh-about__explore-title {
+  font-size: var(--type-lg);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.44px;
+}
+
+.exh-about__explore-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--page);
+}
+
+.exh-about__explore-link {
+  flex: 1 1 312px;
+  max-width: 568px;
+  font-size: var(--type-md);
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.36px;
+  text-decoration: none;
+  color: var(--color-black);
+}
+
+.exh-about__explore-link img {
+  display: inline;
+  vertical-align: baseline;
+}
+
+.exh-about__desktop-only {
+  display: none;
+}
+
+/* Sidebar: on mobile, its children join the single-column grid */
+.exh-about__sidebar {
+  display: contents;
+}
+
+.exh-about__meta {
+  display: flex;
+  grid-area: meta;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--spacing-md);
+}
+
+/* Mobile: Location in the left column; On view + Member Last Looks stacked on the right */
+.exh-about__meta-list {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  column-gap: var(--page-half);
+  row-gap: var(--spacing-sm);
+  width: 100%;
+}
+
+.exh-about__meta-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--meta-gap);
+}
+
+.exh-about__meta-group--location {
+  grid-row: span 2;
+}
+
+.exh-about__meta-detail {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.exh-about__meta-label,
+.exh-about__meta-value {
+  font-size: var(--type-md);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.36px;
+}
+
+.exh-about__meta-label {
+  color: var(--color-gray-555);
+}
+
+.exh-about__meta-sub {
+  font-size: var(--type-sm);
+  line-height: var(--type-md);
+}
+
+.exh-about__map-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  width: fit-content;
+  font-size: var(--type-sm);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.36px;
+  text-decoration: none;
+  color: var(--color-black);
+}
+
+.exh-about__share {
+  display: flex;
+  padding: 9px;
+  border: none;
+  background: var(--color-gray-f6f);
+  cursor: pointer;
+}
+
+/* Promo bar — Figma: Exhibitions / Promo bar */
+.exh-promo {
+  display: flex;
+  grid-area: promo;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-sm) var(--space-ml);
+  background: var(--color-gray-f6f);
+}
+
+.exh-promo__title {
+  font-size: var(--type-lg);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.44px;
+}
+
+.exh-promo__cards {
+  display: flex;
+  flex-direction: column;
+  gap: var(--page);
+}
+
+.exh-promo__card {
+  display: flex;
+  gap: 12px;
+  text-decoration: none;
+  color: var(--color-black);
+}
+
+.exh-promo__image {
+  flex: 1 1 0;
+  min-width: 0;
+  max-width: 144px;
+  max-height: 103.4px;
+  aspect-ratio: 362 / 260;
+  object-fit: cover;
+}
+
+.exh-promo__image--bottom {
+  object-position: 50% 100%;
+}
+
+.exh-promo__card-text {
+  display: flex;
+  flex: 1 1 0;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 144px;
+}
+
+.exh-promo__type {
+  font-size: var(--type-sm);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.36px;
+  color: var(--color-gray-555);
+}
+
+.exh-promo__card-title {
+  font-size: var(--type-md);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.36px;
+}
+
+.exh-promo__meta {
+  font-size: var(--type-sm);
+  line-height: var(--type-md);
+}
+
+@media (min-width: 768px) {
+  .exh-about {
+    grid-template-areas:
+      "quote side"
+      "text  side";
+    grid-template-columns: minmax(0, 773fr) minmax(0, 363fr);
+    grid-template-rows: auto 1fr;
+    column-gap: var(--page);
+  }
+
+  .exh-about__quote {
+    font-size: var(--type-ml);
+  }
+
+  .exh-about__body {
+    line-height: 28px;
+  }
+
+  .exh-about__body p + p {
+    margin-top: 28px;
+  }
+
+  .exh-about__curatorial {
+    line-height: 24px;
+  }
+
+  .exh-about__desktop-only {
+    display: inline;
+  }
+
+  .exh-about__sidebar {
+    display: flex;
+    grid-area: side;
+    flex-direction: column;
+    gap: var(--spacing-lg);
+  }
+
+  .exh-about__meta {
+    gap: var(--spacing-md);
+  }
+
+  .exh-about__meta-list {
+    grid-template-columns: 1fr;
+    row-gap: var(--spacing-sm);
+  }
+
+  .exh-about__meta-group--location {
+    grid-row: auto;
+  }
+}
+
+
+/* --- Membership Banner ------------------------------------------------------ */
+/* Figma: BannerPromo (desktop 2386:38791, mobile 2386:39131).
+   Mobile: sits inside the page gutters. Desktop: box extends 48px past the content
+   edges (1280px wide), so its padding lines the text up with the content. */
+
+.member-banner {
+  max-width: 1280px;
+  margin-inline: auto;
+  /* .exh-about already ends with --spacing-lg of padding; .artist-spotlight starts with 80px */
+  margin-top: calc(var(--banner-space-before) - var(--spacing-lg));
+  margin-bottom: calc(var(--banner-space-after) - 80px);
+  padding-inline: var(--page);
+}
+
+.member-banner__inner {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-lg) var(--page);
+  padding: var(--page);
+  background: var(--color-membership-light-red);
+  color: var(--color-membership-dark-green);
+}
+
+.member-banner__col {
+  display: flex;
+  flex: 1 0 0;
+  flex-direction: column;
+  min-width: 264px;
+  max-width: 568px;
+}
+
+.member-banner__col--right {
+  align-items: flex-start;
+  gap: var(--page);
+}
+
+.member-banner__heading,
+.member-banner__body {
+  text-box: trim-both cap alphabetic;
+}
+
+.member-banner__heading {
+  font-size: var(--type-lg);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.44px;
+}
+
+.member-banner__body {
+  font-size: var(--type-md);
+  line-height: var(--type-lg);
+}
+
+.btn--member-dark {
+  --btn-bg:    var(--color-membership-dark-green);
+  --btn-color: var(--color-membership-light-red);
+}
+
+/* Mobile: 10px padding gives the 36px button height used by the other mobile CTAs */
+.member-banner__cta {
+  padding: var(--cap-sm);
+}
+
+@media (min-width: 768px) {
+  .member-banner {
+    padding-inline: 0;
+  }
+
+  .member-banner__heading {
+    font-size: var(--type-xl);
+    letter-spacing: -0.8px;
+  }
+
+  .member-banner__cta {
+    padding: var(--cap-md);
   }
 }
 
@@ -1119,45 +1691,96 @@ body {
 
 /* --- In-Page Navigation ---------------------------------------------------- */
 
+/* Anchor link bar — Figma: AnchorLinkBar (desktop 2386:38735, mobile 2386:39096).
+   The outer nav is sticky and holds the fixed bottom border (content width);
+   the inner wrapper scrolls horizontally so links can overflow to the edge. */
 .inpage-nav {
-  background: var(--color-white);
   position: sticky;
   top: var(--inpage-top, 0px);
   z-index: 90;
+  background: var(--color-white);
+}
+
+.inpage-nav::after {
+  display: block;
+  max-width: var(--content-width);
+  height: 1px;
+  margin-inline: max(var(--page), calc((100% - var(--content-width)) / 2));
+  background: var(--color-gray-eee);
+  content: '';
+}
+
+/* Same inline padding on both sides = the content edges, so when scrolled to the end
+   the last link lines up with the right edge of the page content. Flex makes browsers
+   include the end padding in the scroll range. */
+.inpage-nav__inner {
+  display: flex;
   overflow-x: auto;
+  padding-block: var(--space-xxs) var(--page);
+  padding-inline: max(var(--page), calc((100% - var(--content-width)) / 2));
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
 }
 
-.inpage-nav::-webkit-scrollbar {
+.inpage-nav__inner::-webkit-scrollbar {
   display: none;
-}
-
-.inpage-nav__inner {
-  padding-block: 20px;
-  padding-inline-start: max(var(--page), calc((100vw - 1280px) / 2 + var(--page)));
-  padding-inline-end: var(--page);
-  max-width: none;
-  width: max-content;
-  min-width: 100%;
-  margin-inline: 0;
 }
 
 .inpage-nav__list {
   display: flex;
-  gap: 48px;
+  flex: none;
+  gap: var(--page);
   white-space: nowrap;
+}
+
+/* Item height = arrow height (12px mobile / 14px desktop), matching Figma's trimmed
+   text: bar = padding + 12/14px. Text and arrow stay centered, so alignment is unchanged. */
+.inpage-nav__item {
+  display: flex;
 }
 
 .inpage-nav__item a {
   display: inline-flex;
   align-items: center;
-  gap: 4px;
+  gap: 2px;
   font-size: var(--type-md);
   font-weight: 700;
+  line-height: 12px;
+  letter-spacing: -0.36px;
   text-decoration: none;
   color: var(--color-gray-767);
-  letter-spacing: -0.36px;
+}
+
+.inpage-nav__arrow {
+  position: relative;
+  top: 0;
+  width: 12px;
+  height: 12px;
+}
+
+/* Mobile: down arrows nudged 1px to sit on the text baseline (up arrows stay put).
+   Uses `top` (not transform) so it doesn't interfere with the hover/rotate states. */
+.inpage-nav__item--below .inpage-nav__arrow {
+  top: 1px;
+}
+
+@media (min-width: 768px) {
+  .inpage-nav__inner {
+    padding-block: var(--page-half);
+  }
+
+  .inpage-nav__item a {
+    line-height: 14px;
+  }
+
+  .inpage-nav__arrow {
+    width: 14px;
+    height: 14px;
+  }
+
+  .inpage-nav__item--below .inpage-nav__arrow {
+    top: 0;
+  }
 }
 
 .inpage-nav__item--active a {
@@ -1179,8 +1802,9 @@ body {
   transform: rotate(-180deg);
 }
 
+/* Keep the arrow's space so labels don't shift horizontally when the active item changes */
 .inpage-nav__item--active .inpage-nav__arrow {
-  display: none;
+  opacity: 0;
 }
 
 .inpage-nav__item--below a:hover .inpage-nav__arrow {
@@ -1196,7 +1820,7 @@ body {
 /* Sections offset for fixed navs */
 #overview, #events, #audio, #catalogues, #artists,
 #videos, #articles, #research, #images, #thanks, #reading,
-#resources, #history, #research-resources, #on-view {
+#resources, #history, #research-resources, #on-view, #publications {
   scroll-margin-top: var(--scroll-offset, 120px);
 }
 
@@ -1849,11 +2473,19 @@ border: 2px solid var(--color-black);
 
 /* --- Research Resources ---------------------------------------------------- */
 
+/* Mobile: stack the two columns so the nowrap links don't push the page wider than the screen */
 .research-resources-grid {
   display: flex;
+  flex-direction: column;
   gap: var(--page);
   align-items: flex-start;
   padding-bottom: var(--page-2x);
+}
+
+@media (min-width: 768px) {
+  .research-resources-grid {
+    flex-direction: row;
+  }
 }
 
 .exh-section__title.r1-b{
@@ -2146,7 +2778,7 @@ border: 2px solid var(--color-black);
   font-weight: 700;
   letter-spacing: -0.8px;
   line-height: 1;
-  width: 363px;
+  width: min(363px, 100%);   /* 363px on desktop; fits the screen on mobile */
   flex-shrink: 0;
 }
 
