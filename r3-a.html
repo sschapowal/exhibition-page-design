@@ -56,26 +56,8 @@
       </div>
     </div>
 
-    <!-- Collapsed nav (shown after scrolling past exhibition title) -->
-    <div class="site-nav__condensed">
-      <div class="site-nav__condensed-inner">
-        <ul class="site-nav__links">
-          <li><span class="site-nav__link">Visit</span></li>
-          <li><span class="site-nav__link site-nav__link--active">Exhibitions and events</span></li>
-          <li><span class="site-nav__link">Art and artists</span></li>
-          <li><span class="site-nav__link">Store</span></li>
-          <li>
-            <button class="site-nav__search" aria-label="Search">
-              <img src="img/shared/icons/Search.svg" alt="" aria-hidden="true" width="20" height="20">
-            </button>
-          </li>
-        </ul>
-        <div class="site-nav__actions">
-          <span class="btn btn--gray">Donate</span>
-          <span class="btn btn--blue">Tickets</span>
-        </div>
-      </div>
-    </div>
+    <!-- Desktop collapse: on scroll down this whole nav slides up (logo row hides) and
+         Donate/Tickets slide into the links row — see .site-nav--scrolled in main.css -->
 
   </nav>
 
@@ -102,10 +84,23 @@
       <!-- Carousel: active slide centered, neighbours peek in; loops. Order per Figma (dot 1 = wire sculpture). -->
       <div class="hero-carousel" id="hero-carousel">
         <div class="hero-carousel__viewport">
-          <div class="hero-carousel__slide"><img src="img/ruth-asawa/asawa-carousel-2.png" alt="" width="1532" height="856"></div>
-          <div class="hero-carousel__slide"><img src="img/ruth-asawa/asawa-carousel-3.png" alt="" width="1192" height="856"></div>
-          <div class="hero-carousel__slide"><img src="img/ruth-asawa/asawa-carousel-4.png" alt="" width="1534" height="856"></div>
-          <div class="hero-carousel__slide"><img src="img/ruth-asawa/asawa-carousel-1.png" alt="" width="856" height="856"></div>
+          <!-- Captions are shown in the image overlay. Placeholder copy except Desert Plant (from Figma). -->
+          <div class="hero-carousel__slide">
+            <img src="img/ruth-asawa/asawa-carousel-2.png" alt="" width="1532" height="856">
+            <p class="hero-carousel__caption" hidden>Ruth Asawa. <i>Untitled (S.270, Hanging Seven-Lobed, Multi-Layered Continuous Form)</i>. c. 1960</p>
+          </div>
+          <div class="hero-carousel__slide">
+            <img src="img/ruth-asawa/asawa-carousel-3.png" alt="" width="1192" height="856">
+            <p class="hero-carousel__caption" hidden>Installation view of <i>Ruth Asawa: A Retrospective</i>, The Museum of Modern Art, New York, 2026</p>
+          </div>
+          <div class="hero-carousel__slide">
+            <img src="img/ruth-asawa/asawa-carousel-4.png" alt="" width="1534" height="856">
+            <p class="hero-carousel__caption" hidden>Ruth Asawa. <i>Untitled (Folded Paper)</i>. c. 1952</p>
+          </div>
+          <div class="hero-carousel__slide">
+            <img src="img/ruth-asawa/asawa-carousel-1.png" alt="" width="856" height="856">
+            <p class="hero-carousel__caption" hidden>Ruth Asawa. <i>Desert Plant (TAM.1460)</i>. 1965</p>
+          </div>
         </div>
         <div class="hero-carousel__dots">
           <button class="hero-carousel__dot" aria-label="Slide 1"></button>
@@ -115,6 +110,9 @@
         </div>
       </div>
     </section>
+
+    <!-- Marks where the anchor bar sits in the page flow (used to detect when it sticks) -->
+    <div class="inpage-nav-sentinel" id="inpage-nav-sentinel" aria-hidden="true"></div>
 
     <!-- Anchor Link Bar (sticky in-page navigation) -->
     <nav class="inpage-nav" id="inpage-nav" aria-label="Exhibition sections">
@@ -769,6 +767,29 @@
 
   </main>
 
+  <!-- Image Overlay — opens when the centered carousel image is clicked. Figma: 2391:55589 -->
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Image viewer" hidden>
+    <button class="lightbox__close" aria-label="Close">
+      <img src="img/shared/icons/exit-white.svg" alt="" aria-hidden="true" width="19" height="19">
+    </button>
+    <figure class="lightbox__figure">
+      <div class="lightbox__stage">
+        <img class="lightbox__image" src="" alt="">
+      </div>
+      <figcaption class="lightbox__footer">
+        <p class="lightbox__caption"></p>
+        <div class="lightbox__nav">
+          <p class="lightbox__count" aria-live="polite"></p>
+          <div class="lightbox__arrows">
+            <img src="img/shared/icons/carousel-arrows-white.svg" alt="" aria-hidden="true" width="72" height="21">
+            <button class="lightbox__arrow lightbox__arrow--prev" aria-label="Previous image"></button>
+            <button class="lightbox__arrow lightbox__arrow--next" aria-label="Next image"></button>
+          </div>
+        </div>
+      </figcaption>
+    </figure>
+  </div>
+
   <!-- Site Footer -->
   <footer class="site-footer">
     <div class="site-footer__inner page-container">
@@ -830,18 +851,108 @@
   <script>
     (function () {
       var nav = document.getElementById('site-nav');
-      var trigger = document.getElementById('exh-header');
       var inpageNav = document.getElementById('inpage-nav');
-      if (!nav || !trigger) return;
+      var barSentinel = document.getElementById('inpage-nav-sentinel');
+      if (!nav) return;
 
-      var fullNavHeight = nav.offsetHeight;
-      document.body.style.paddingTop = fullNavHeight + 'px';
+      // Exact (fractional) nav height. Re-measured after web fonts load and on resize: the
+      // fallback font can make the nav a pixel taller/shorter, which left a hairline gap
+      // between the nav and the sticky anchor bar.
+      var fullNavHeight = 0;
+      function measureNavHeight() {
+        fullNavHeight = nav.getBoundingClientRect().height;   // transform-independent
+        document.body.style.paddingTop = fullNavHeight + 'px';
+      }
+      measureNavHeight();
 
       // Space between the bottom of the anchor bar and the top of a section's title text
       var TITLE_GAP = 48;
 
-      // Build list of tracked sections from inpage nav items. Each section's "title" is its
-      // first line of text (heading, or e.g. the quote / "Audio guide" label).
+      // --- Global nav: MoMA.org-style collapse ---------------------------------------
+      // Desktop: scrolling down slides the whole nav up so only the links row stays
+      // (Donate/Tickets slide down into that row, Membership fades). Scrolling up slides it
+      // back. All of it is CSS transitions on transform, so nothing jumps.
+      var COLLAPSE_AFTER = 40;   // px scrolled before the nav can collapse
+      var DIRECTION_SLACK = 6;   // px of travel needed before switching state (ignores jitter)
+      var collapseOffset = 0;    // how far the nav slides up (desktop only)
+      var collapsed = false;
+      var anchorY = window.scrollY;
+
+      function measureNav() {
+        var full = nav.querySelector('.site-nav__full');
+        var links = full && full.querySelector('.site-nav__links');
+        var actions = full && full.querySelector('.site-nav__actions');
+        if (!links || getComputedStyle(full).display === 'none') {     // mobile nav: no collapse
+          collapseOffset = 0;
+          nav.style.setProperty('--nav-collapse-offset', '0px');
+          return;
+        }
+        var wasCollapsed = nav.classList.contains('site-nav--scrolled');
+        nav.classList.add('is-measuring');                             // read final, not mid-animation, positions
+        nav.classList.remove('site-nav--scrolled');                    // measure the expanded layout
+        var navTop = nav.getBoundingClientRect().top;
+        var pad = parseFloat(getComputedStyle(full.querySelector('.site-nav__inner')).paddingTop) || 0;
+        var l = links.getBoundingClientRect(), a = actions.getBoundingClientRect();
+        // Slide up until the links row has the same top padding the nav has
+        collapseOffset = Math.round(l.top - navTop - pad);
+        nav.style.setProperty('--nav-collapse-offset', collapseOffset + 'px');
+        // Move Donate/Tickets down so they center on the links row
+        nav.style.setProperty('--nav-actions-shift', Math.round((l.top + l.height / 2) - (a.top + a.height / 2)) + 'px');
+        nav.classList.toggle('site-nav--scrolled', wasCollapsed);
+        void nav.offsetHeight;
+        nav.classList.remove('is-measuring');
+      }
+
+      // Visible height of the nav (what the anchor bar sits under)
+      function visibleNavHeight(isCollapsed) {
+        return fullNavHeight - (isCollapsed ? collapseOffset : 0);
+      }
+
+      function setCollapsed(next) {
+        if (next === collapsed) return;
+        collapsed = next;
+        nav.classList.toggle('site-nav--scrolled', collapsed);
+      }
+
+      // While an anchor-link scroll is running, the nav may collapse but never reopens —
+      // only the user scrolling up themselves brings the full nav back. Unlocks once the
+      // scroll has stopped, and direction tracking restarts from where it landed.
+      var navLocked = false;
+      var unlockTimer;
+      function unlockNav() {
+        navLocked = false;
+        anchorY = window.scrollY;
+      }
+      function lockNavUntilScrollEnds() {
+        navLocked = true;
+        clearTimeout(unlockTimer);
+        unlockTimer = setTimeout(unlockNav, 200);
+      }
+      window.addEventListener('scroll', function () {
+        if (!navLocked) return;
+        clearTimeout(unlockTimer);
+        unlockTimer = setTimeout(unlockNav, 200);               // still moving: wait for it to stop
+      }, { passive: true });
+      window.addEventListener('scrollend', function () {
+        if (navLocked) { clearTimeout(unlockTimer); unlockNav(); }
+      });
+
+      function updateNavState() {
+        var y = window.scrollY;
+        if (y <= COLLAPSE_AFTER) { setCollapsed(false); anchorY = y; return; }
+        if (collapsed) {
+          if (navLocked) return;                                  // anchor scroll: stay collapsed
+          if (y > anchorY) anchorY = y;                           // keep tracking the lowest point
+          else if (anchorY - y > DIRECTION_SLACK) { setCollapsed(false); anchorY = y; }
+        } else {
+          if (y < anchorY) anchorY = y;                           // keep tracking the highest point
+          else if (y - anchorY > DIRECTION_SLACK) { setCollapsed(true); anchorY = y; }
+        }
+      }
+
+      // --- Anchor bar sections ---------------------------------------------------------
+      // Each tracked section's "title" is its first line of text (heading, or e.g. the
+      // quote / "Audio guide" label).
       var tracked = [];
       if (inpageNav) {
         var items = inpageNav.querySelectorAll('.inpage-nav__item[data-section]');
@@ -879,13 +990,17 @@
         return obj.title.getBoundingClientRect().top + obj.capOffset;
       }
 
-      function updateInpageTop() {
-        var h = nav.offsetHeight;
-        document.documentElement.style.setProperty('--inpage-top', h + 'px');
-        if (inpageNav) {
-          var offset = h + inpageNav.offsetHeight;
-          document.documentElement.style.setProperty('--scroll-offset', offset + 'px');
-        }
+      // The bar sticks under the visible nav. Its `top` transitions in CSS with the same
+      // timing as the nav, so it slides along with it.
+      function updateBarPosition() {
+        var navBottom = visibleNavHeight(collapsed);
+        document.documentElement.style.setProperty('--inpage-top', navBottom + 'px');
+        if (!inpageNav) return;
+        // Stuck = the bar's natural (in-flow) position has reached the nav. The sentinel sits
+        // right above the bar, so it isn't affected by the sticky slide animation.
+        var natural = barSentinel ? barSentinel.getBoundingClientRect().bottom : inpageNav.getBoundingClientRect().top;
+        inpageNav.classList.toggle('inpage-nav--stuck', natural <= navBottom + 0.5);
+        document.documentElement.style.setProperty('--scroll-offset', (navBottom + inpageNav.offsetHeight) + 'px');
       }
 
       // All breakpoints: if the active link is outside the visible part of the bar, slide
@@ -918,8 +1033,9 @@
       function updateActiveSection() {
         if (!tracked.length) return;
         // A section becomes active once its title text reaches TITLE_GAP below the bar —
-        // the same spot an anchor click scrolls it to (+1px for rounding).
-        var threshold = nav.offsetHeight + (inpageNav ? inpageNav.offsetHeight : 0) + TITLE_GAP + 1;
+        // the same spot an anchor click scrolls it to (+1px for rounding). Uses where the
+        // nav/bar are heading, not mid-animation positions.
+        var threshold = visibleNavHeight(collapsed) + (inpageNav ? inpageNav.offsetHeight : 0) + TITLE_GAP + 1;
         // Active = the lowest title on the page that has passed the threshold.
         // Uses page position (not link order), so links can be ordered independently of the DOM.
         var tops = tracked.map(titleTop);
@@ -944,23 +1060,25 @@
       }
 
       function update() {
-        var bottom = trigger.getBoundingClientRect().bottom;
-        nav.classList.toggle('site-nav--collapsed', bottom < fullNavHeight);
-        updateInpageTop();
+        updateNavState();
+        updateBarPosition();
         updateActiveSection();
       }
 
-      // Anchor link clicks: scroll so the section's title text sits TITLE_GAP below the bar.
-      // The global nav collapses (desktop) partway through the scroll, so use the nav
-      // height it will have once the scroll ends, not the height at click time.
-      function navHeightIfCollapsed(collapsed) {
-        var was = nav.classList.contains('site-nav--collapsed');
-        nav.classList.toggle('site-nav--collapsed', collapsed);
-        var h = nav.offsetHeight;
-        nav.classList.toggle('site-nav--collapsed', was);
+      // The bar is always stuck once an anchor scroll ends, so measure it in that state
+      function stuckBarHeight() {
+        var was = inpageNav.classList.contains('inpage-nav--stuck');
+        inpageNav.classList.add('is-measuring', 'inpage-nav--stuck');
+        var h = inpageNav.offsetHeight;
+        inpageNav.classList.toggle('inpage-nav--stuck', was);
+        void inpageNav.offsetHeight;
+        inpageNav.classList.remove('is-measuring');
         return h;
       }
 
+      // Anchor link clicks: scroll so the section's title text sits TITLE_GAP below the bar.
+      // The nav never reopens during this scroll, so it ends collapsed if it's collapsed now
+      // or if the scroll goes down far enough to collapse it; otherwise it stays expanded.
       if (inpageNav) {
         inpageNav.addEventListener('click', function (e) {
           var link = e.target.closest('.inpage-nav__item[data-section] a');
@@ -968,24 +1086,25 @@
           if (!obj) return;
           e.preventDefault();
           var titleY = titleTop(obj) + window.scrollY;
-          var triggerY = trigger.getBoundingClientRect().bottom + window.scrollY;
-          var barH = inpageNav.offsetHeight;
-          // Try the collapsed nav first; if the header would still be visible there, the nav stays full
-          var dest = titleY - TITLE_GAP - barH - navHeightIfCollapsed(true);
-          if (triggerY - dest >= fullNavHeight) {
-            dest = titleY - TITLE_GAP - barH - navHeightIfCollapsed(false);
+          var barH = stuckBarHeight();
+          var dest = titleY - TITLE_GAP - barH - visibleNavHeight(true);
+          var endsCollapsed = dest > COLLAPSE_AFTER && (collapsed || dest > window.scrollY + DIRECTION_SLACK);
+          if (!endsCollapsed) {
+            dest = titleY - TITLE_GAP - barH - visibleNavHeight(false);
           }
+          lockNavUntilScrollEnds();
           window.scrollTo({ top: Math.max(0, dest), behavior: 'smooth' });
           history.replaceState(null, '', '#' + obj.section.id);
         });
       }
 
       window.addEventListener('scroll', update, { passive: true });
-      // Cap offsets depend on font size, so re-measure once fonts load and on resize
-      window.addEventListener('resize', function () { measureCapOffsets(); update(); });
-      if (document.fonts) document.fonts.ready.then(function () { measureCapOffsets(); update(); });
+      // Measurements depend on layout/font size, so redo them once fonts load and on resize
+      function remeasure() { measureNavHeight(); measureNav(); measureCapOffsets(); update(); }
+      window.addEventListener('resize', remeasure);
+      if (document.fonts) document.fonts.ready.then(remeasure);
+      measureNav();
       measureCapOffsets();
-      updateInpageTop();
       update();
     })();
 
@@ -1056,8 +1175,9 @@
         });
       });
 
-      // Mouse: drag to scroll; a click without dragging centers the clicked slide
+      // Mouse: drag to scroll (a drag never counts as a click)
       var drag = null;
+      var suppressClick = false;
       viewport.addEventListener('pointerdown', function (e) {
         if (e.pointerType !== 'mouse') return;
         drag = { x: e.clientX, left: viewport.scrollLeft, moved: false };
@@ -1071,22 +1191,93 @@
         }
         if (drag.moved) viewport.scrollLeft = drag.left - dx;
       });
-      window.addEventListener('pointerup', function (e) {
+      window.addEventListener('pointerup', function () {
         if (!drag) return;
         var wasDrag = drag.moved;
         drag = null;
         viewport.style.scrollSnapType = '';
         if (wasDrag) {
+          suppressClick = true;
           scrollToSlide(all[nearestIndex()], true);
-        } else {
-          var hit = all.filter(function (el) {
-            var r = el.getBoundingClientRect();
-            return e.clientX >= r.left && e.clientX <= r.right && e.target.closest('.hero-carousel__viewport');
-          })[0];
-          if (hit) scrollToSlide(hit, true);
         }
       });
       viewport.addEventListener('dragstart', function (e) { e.preventDefault(); });
+
+      // Click / tap: the centered image opens the overlay; a peeking image scrolls to center
+      viewport.addEventListener('click', function (e) {
+        if (suppressClick) { suppressClick = false; return; }
+        var slide = e.target.closest('.hero-carousel__slide');
+        if (!slide) return;
+        if (slide.classList.contains('hero-carousel__slide--active')) {
+          openLightbox(all.indexOf(slide) % n);
+        } else {
+          scrollToSlide(slide, true);
+        }
+      });
+
+      // Image overlay (lightbox) — Figma 2391:55589
+      var lightbox = document.getElementById('lightbox');
+      var lbImage = lightbox.querySelector('.lightbox__image');
+      var lbCaption = lightbox.querySelector('.lightbox__caption');
+      var lbCount = lightbox.querySelector('.lightbox__count');
+      var lbClose = lightbox.querySelector('.lightbox__close');
+      var lbPrev = lightbox.querySelector('.lightbox__arrow--prev');
+      var lbNext = lightbox.querySelector('.lightbox__arrow--next');
+      var lbIndex = 0;
+      var lbReturnFocus = null;
+
+      function showImage(i) {
+        lbIndex = ((i % n) + n) % n;
+        var slide = originals[lbIndex];
+        var caption = slide.querySelector('.hero-carousel__caption');
+        lbImage.src = slide.querySelector('img').getAttribute('src');
+        lbImage.alt = caption ? caption.textContent : '';
+        lbCaption.innerHTML = caption ? caption.innerHTML : '';
+        lbCount.textContent = (lbIndex + 1) + ' of ' + n;
+      }
+
+      function openLightbox(i) {
+        lbReturnFocus = document.activeElement;
+        showImage(i);
+        lightbox.hidden = false;
+        document.documentElement.style.overflow = 'hidden';   // lock page scroll
+        lbClose.focus();
+      }
+
+      function closeLightbox() {
+        lightbox.hidden = true;
+        document.documentElement.style.overflow = '';
+        scrollToSlide(all[n + lbIndex], false);                // carousel follows the overlay
+        updateActive();
+        if (lbReturnFocus && lbReturnFocus.focus) lbReturnFocus.focus();
+      }
+
+      lbClose.addEventListener('click', closeLightbox);
+      lbPrev.addEventListener('click', function () { showImage(lbIndex - 1); });
+      lbNext.addEventListener('click', function () { showImage(lbIndex + 1); });
+
+      document.addEventListener('keydown', function (e) {
+        if (lightbox.hidden) return;
+        if (e.key === 'Escape') { closeLightbox(); }
+        else if (e.key === 'ArrowLeft') { showImage(lbIndex - 1); }
+        else if (e.key === 'ArrowRight') { showImage(lbIndex + 1); }
+        else if (e.key === 'Tab') {                            // keep focus inside the overlay
+          var focusable = [lbClose, lbPrev, lbNext];
+          var at = focusable.indexOf(document.activeElement);
+          e.preventDefault();
+          focusable[(at + (e.shiftKey ? -1 : 1) + focusable.length) % focusable.length].focus();
+        }
+      });
+
+      // Touch: swipe the image left/right
+      var swipeX = null;
+      lightbox.querySelector('.lightbox__stage').addEventListener('pointerdown', function (e) { swipeX = e.clientX; });
+      lightbox.querySelector('.lightbox__stage').addEventListener('pointerup', function (e) {
+        if (swipeX === null) return;
+        var dx = e.clientX - swipeX;
+        swipeX = null;
+        if (Math.abs(dx) > 40) showImage(lbIndex + (dx < 0 ? 1 : -1));
+      });
 
       window.addEventListener('resize', function () { scrollToSlide(all[n + (nearestIndex() % n)], false); });
       scrollToSlide(all[n], false);

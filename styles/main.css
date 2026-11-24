@@ -453,10 +453,6 @@ body {
   cursor: pointer;
 }
 
-.hero-carousel__slide--active {
-  cursor: default;
-}
-
 /* Width follows each image's aspect ratio; on mobile the active slide is capped so neighbours peek in */
 .hero-carousel__slide img {
   display: block;
@@ -493,6 +489,37 @@ body {
 
   .exh-masthead__cta-prefix {
     display: inline;
+  }
+}
+
+/* MoMA.org-style collapse (desktop): the nav slides up so only the links row stays,
+   Donate/Tickets slide down into that row and Membership fades. JS sets
+   --nav-collapse-offset / --nav-actions-shift from the layout and toggles .site-nav--scrolled.
+   (A separate class from .site-nav--collapsed, so other prototypes keep their nav.) */
+@media (min-width: 768px) {
+  .site-nav {
+    transition: transform 0.3s ease-in-out;
+  }
+
+  .site-nav--scrolled {
+    transform: translateY(calc(-1 * var(--nav-collapse-offset, 0px)));
+  }
+
+  .site-nav__right .site-nav__actions {
+    transition: transform 0.3s ease-in-out;
+  }
+
+  .site-nav--scrolled .site-nav__right .site-nav__actions {
+    transform: translateY(var(--nav-actions-shift, 0px));
+  }
+
+  .site-nav__membership {
+    transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+  }
+
+  .site-nav--scrolled .site-nav__membership {
+    visibility: hidden;
+    opacity: 0;
   }
 }
 
@@ -557,7 +584,7 @@ body {
     "promo";
   grid-template-columns: minmax(0, 1fr);
   row-gap: var(--spacing-lg);
-  padding-top: var(--spacing-md);
+  padding-top: var(--spacing-lg);   /* 48px below the anchor bar at all sizes */
   padding-bottom: var(--spacing-lg);
   max-width: calc(var(--content-width) + 2 * var(--page));
 }
@@ -846,6 +873,149 @@ body {
   .exh-about__meta-group--location {
     grid-row: auto;
   }
+}
+
+
+/* --- Image Overlay (lightbox) ------------------------------------------------ */
+/* Figma: Expanded image overlay (2391:55589). Desktop per design; mobile adapted. */
+
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: flex;
+  flex-direction: column;
+  padding: var(--overlay-top) var(--page) var(--overlay-bottom);
+  background: var(--color-black);   /* Figma: 95% black layer over a solid black frame = solid */
+  color: var(--color-white);
+}
+
+.lightbox[hidden] {
+  display: none;
+}
+
+.lightbox__close {
+  position: absolute;
+  top: var(--overlay-close-top);
+  right: var(--page);
+  display: flex;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+.lightbox__figure {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: var(--overlay-gap);
+  width: 100%;
+  max-width: var(--content-width);
+  min-height: 0;
+  margin-inline: auto;
+}
+
+.lightbox__stage {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  touch-action: pan-y;
+}
+
+.lightbox__image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* Footer has a fixed height and position, so the image size and the arrows never move
+   between images. Long captions overflow downward instead of pushing things up.
+   Mobile: counter + arrows row first (fixed, right under the image), caption below it.
+   Desktop: caption left, counter + arrows right, first caption line level with the arrows. */
+.lightbox__footer {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-areas:
+    "nav"
+    "caption";
+  align-content: start;
+  row-gap: var(--page);
+  height: var(--overlay-footer-height);
+}
+
+.lightbox__caption {
+  grid-area: caption;
+  max-width: 773px;
+  font-size: var(--type-md);
+  line-height: 24px;
+  text-box: trim-both cap alphabetic;
+}
+
+.lightbox__nav {
+  display: flex;
+  grid-area: nav;
+  justify-self: end;
+  align-items: center;
+  gap: var(--page);
+}
+
+.lightbox__count {
+  font-size: var(--type-md);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.36px;
+  white-space: nowrap;
+  text-box: trim-both cap alphabetic;
+}
+
+@media (min-width: 768px) {
+  .lightbox__footer {
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas: "caption nav";
+    column-gap: var(--page);
+  }
+
+  /* Center the caption's first line (cap height) on the 21px arrows row, as in Figma */
+  .lightbox__caption {
+    margin-top: calc((var(--overlay-arrows-height) - 1cap) / 2);
+  }
+
+  .lightbox__nav {
+    align-self: start;
+    height: var(--overlay-arrows-height);
+  }
+}
+
+/* One arrows asset (72×21); a transparent button covers each half */
+.lightbox__arrows {
+  position: relative;
+  display: flex;
+}
+
+.lightbox__arrow {
+  position: absolute;
+  top: -8px;
+  bottom: -8px;
+  width: 50%;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+.lightbox__arrow--prev {
+  left: 0;
+}
+
+.lightbox__arrow--next {
+  right: 0;
+}
+
+.hero-carousel__slide--active {
+  cursor: zoom-in;
 }
 
 
@@ -1694,11 +1864,27 @@ body {
 /* Anchor link bar — Figma: AnchorLinkBar (desktop 2386:38735, mobile 2386:39096).
    The outer nav is sticky and holds the fixed bottom border (content width);
    the inner wrapper scrolls horizontally so links can overflow to the edge. */
+/* `top` follows the visible bottom of the global nav and slides with it (same timing) */
 .inpage-nav {
   position: sticky;
   top: var(--inpage-top, 0px);
   z-index: 90;
   background: var(--color-white);
+  /* White strip extending 8px up behind the global nav (which sits above it), so no
+     hairline of page content can show between nav and bar from sub-pixel rounding or
+     while both are sliding. Above the unstuck bar is white space, so it's invisible there. */
+  box-shadow: 0 calc(-1 * var(--space-xxs)) 0 var(--color-white);
+  transition: top 0.3s ease-in-out, margin-bottom 0.3s ease-in-out;
+}
+
+.inpage-nav-sentinel {
+  height: 0;
+}
+
+/* JS adds this briefly while measuring final (post-transition) sizes */
+.is-measuring,
+.is-measuring * {
+  transition: none !important;
 }
 
 .inpage-nav::after {
@@ -1720,6 +1906,7 @@ body {
   padding-inline: max(var(--page), calc((100% - var(--content-width)) / 2));
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
+  transition: padding-top 0.3s ease-in-out;
 }
 
 .inpage-nav__inner::-webkit-scrollbar {
@@ -1773,6 +1960,16 @@ body {
     line-height: 14px;
   }
 
+  /* While stuck under the global nav: 16px top padding (instead of 24px). The 8px
+     difference moves to margin-bottom so content below doesn't jump when it sticks. */
+  .inpage-nav--stuck {
+    margin-bottom: calc(var(--page-half) - var(--space-md));
+  }
+
+  .inpage-nav--stuck .inpage-nav__inner {
+    padding-top: var(--space-md);
+  }
+
   .inpage-nav__arrow {
     width: 14px;
     height: 14px;
@@ -1792,14 +1989,17 @@ body {
 
 }
 
+/* Direction (`rotate`) switches instantly — no spinning when an item stops being active,
+   the arrow just fades in already pointing the right way. Only the hover nudge
+   (`translate`), the hover color and the fade animate. */
 .inpage-nav__arrow {
   display: inline-block;
   flex-shrink: 0;
-  transition: transform 0.15s ease, filter 0.15s ease;
+  transition: translate 0.15s ease, filter 0.15s ease, opacity 0.2s ease;
 }
 
 .inpage-nav__item--above .inpage-nav__arrow {
-  transform: rotate(-180deg);
+  rotate: -180deg;
 }
 
 /* Keep the arrow's space so labels don't shift horizontally when the active item changes */
@@ -1808,12 +2008,12 @@ body {
 }
 
 .inpage-nav__item--below a:hover .inpage-nav__arrow {
-  transform: translateY(4px);
+  translate: 0 4px;
   filter: brightness(0);
 }
 
 .inpage-nav__item--above a:hover .inpage-nav__arrow {
-  transform: translateY(-4px) rotate(-180deg);
+  translate: 0 -4px;
   filter: brightness(0);
 }
 

@@ -114,6 +114,14 @@
   --banner-space-before: 48px;
   --banner-space-after:  96px;
 
+  /* --- Image overlay (Figma 2391:55589; mobile adapted) -------------------- */
+  --overlay-top:    64px;   /* top of screen → image */
+  --overlay-gap:    24px;   /* image → caption row */
+  --overlay-bottom: 24px;   /* caption row → bottom of screen */
+  --overlay-close-top: 24px;
+  --overlay-arrows-height: 21px;   /* carousel-arrows-white.svg */
+  --overlay-footer-height: 117px;  /* arrows row + gap + 3 caption lines; longer captions overflow down */
+
   /* --- Exhibition header --------------------------------------------------- */
   --exh-header-offset: 32px;   /* global nav → breadcrumb */
   --carousel-height:   211px;
@@ -149,6 +157,12 @@
 
     --banner-space-before: 128px;
     --banner-space-after:  128px;
+
+    --overlay-top:    79px;
+    --overlay-gap:    32px;
+    --overlay-bottom: 59px;
+    --overlay-close-top: 28px;
+    --overlay-footer-height: 21px;   /* one row = arrows height; extra caption lines overflow into the bottom space */
 
     --exh-header-offset: 40px;
     --carousel-height:   428px;
